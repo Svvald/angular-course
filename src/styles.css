@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+  background-image: linear-gradient(45deg, #868fd6, #dda9c8 );
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.btn {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  border: none;
+  background-color: #7a81ff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #221b9c;
+}
+
+.btn-outline {
+  border: 1px solid #877cd0;
+  background-color: rgba(0, 0, 0, 0);
+  color: #221b9c;
+}
+
+.btn-outline:hover {
+  background-color: #9f96d8;
+}
+
+input {
+  border: 1px solid #d0d0e9;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #d0d0e9;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+input:focus {
+  border-color: #877cd0;
+  color: #221b9c;
+}

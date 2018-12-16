@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses-controls.component.css']
 })
 export class CoursesControlsComponent implements OnInit {
+  public searchingCourseName: string;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSearch(): void {
+    console.log(this.searchingCourseName);
   }
 
 }

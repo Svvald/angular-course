@@ -17,7 +17,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
   ],
   imports: [
     BrowserModule,
-    CoursesPageModule
+    CoursesPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,17 @@
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls__search {
+  width: 75%;
+}
+
+.controls__search input {
+  width: 75%;
+  margin-right: 16px;
+}
+
+.controls__add-course {
+  margin-left: auto;
+}
