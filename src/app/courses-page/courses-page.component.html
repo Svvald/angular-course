@@ -1,4 +1,4 @@
 <app-courses-controls></app-courses-controls>
-<p>
-  Courses Page
-</p>
+<div>
+  <app-course-item *ngFor="let course of courses" [data]="course"></app-course-item>
+</div>
