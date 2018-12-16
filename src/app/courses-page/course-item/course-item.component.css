@@ -1,0 +1,37 @@
+.course-item {
+  padding: 16px 24px;
+  background-color: white;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.course-item:hover {
+  box-shadow: 0 0 16px #c4c7fc;
+}
+
+.course-item__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-item__title {
+  margin-right: 8px;
+}
+
+.course-item__buttons {
+  margin-right: auto;
+}
+
+.course-item__button {
+  margin-right: 4px;
+}
+
+.course-item__duration {
+  margin-right: 16px;
+}
+
+.course-item__description {
+  text-align: justify;
+}

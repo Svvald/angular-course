@@ -16,6 +16,11 @@ body {
   cursor: pointer;
 }
 
+.btn-round {
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+
 .btn-primary {
   border: none;
   background-color: #7a81ff;
@@ -23,7 +28,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: #221b9c;
+  background: #d798c3;
 }
 
 .btn-outline {
@@ -33,7 +38,7 @@ body {
 }
 
 .btn-outline:hover {
-  background-color: #9f96d8;
+  border-color: #d798c3;
 }
 
 input {
