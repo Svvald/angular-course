@@ -1,3 +1,7 @@
 .breadcrumbs {
   color: #221b9c;
 }
+
+.breadcrumbs h1 {
+  margin: 0;
+}

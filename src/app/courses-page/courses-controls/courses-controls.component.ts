@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses-controls.component.css']
 })
 export class CoursesControlsComponent implements OnInit {
-  public searchingCourseName: string;
+  public searchingCourseName = '';
 
   constructor() { }
 
@@ -14,7 +14,7 @@ export class CoursesControlsComponent implements OnInit {
   }
 
   onSearch(): void {
-    console.log(this.searchingCourseName);
+    console.log(`Searching course: ${this.searchingCourseName}`);
   }
 
 }
