@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseItemComponent } from './course-item.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('CourseItemComponent', () => {
   let component: CourseItemComponent;
@@ -8,7 +9,12 @@ describe('CourseItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent ]
+      declarations: [
+        CourseItemComponent
+      ],
+      imports: [
+        FontAwesomeModule
+      ]
     })
     .compileComponents();
   }));
@@ -16,6 +22,7 @@ describe('CourseItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CourseItemComponent);
     component = fixture.componentInstance;
+    component.data = { title: 'Title', duration: 60, description: 'Description', created: new Date(), id: 0 };
     fixture.detectChanges();
   });
 
