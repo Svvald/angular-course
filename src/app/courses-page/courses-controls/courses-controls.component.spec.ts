@@ -24,4 +24,13 @@ describe('CoursesControlsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should raise event handler on button click', () => {
+    component.searchingCourseName = 'Test';
+    console.log = jasmine.createSpy('log');
+
+    const searchButton: HTMLElement = fixture.nativeElement.querySelectorAll('button')[0];
+    searchButton.click();
+    expect(console.log).toHaveBeenCalledWith('Searching course: Test');
+  });
 });
