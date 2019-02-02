@@ -17,7 +17,7 @@ export class CoursesPageComponent implements OnInit {
       {
         id: 1,
         title: 'Course #1',
-        created: new Date(),
+        created: new Date(1546300800000),
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
@@ -26,7 +26,7 @@ export class CoursesPageComponent implements OnInit {
       {
         id: 2,
         title: 'Course #2',
-        created: new Date(),
+        created: new Date(1543622400000),
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
@@ -35,7 +35,7 @@ export class CoursesPageComponent implements OnInit {
       {
         id: 3,
         title: 'Course #3',
-        created: new Date(),
+        created: new Date(1543622400000),
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
@@ -44,7 +44,7 @@ export class CoursesPageComponent implements OnInit {
       {
         id: 4,
         title: 'Course #4',
-        created: new Date(),
+        created: new Date(1551312000000),
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
