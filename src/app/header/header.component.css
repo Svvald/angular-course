@@ -8,10 +8,18 @@
 }
 
 .header__logo {
+  display: flex;
+  align-items: center;
   margin-right: auto;
 }
 
+a.header__logo {
+  text-decoration: none;
+  color: #7a81ff;
+}
+
 .header__logo img {
+  margin-right: 8px;
   height: 32px;
 }
 

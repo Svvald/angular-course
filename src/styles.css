@@ -1,13 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 html {
-  height: 100%;
-  background-color: #ae9bd0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
+html, body {
   height: 100%;
+  width: 100%;
+  padding: 0;
   margin: 0;
+}
+
+body {
+  background-color: #ae9bd0;
 }
 
 .btn {
