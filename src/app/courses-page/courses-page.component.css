@@ -15,3 +15,12 @@
   color: white;
   background-color: #7a81ff;
 }
+
+.courses-page__no-data {
+  width: 100%;
+  color: #221b9c;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: bold;
+}

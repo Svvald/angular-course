@@ -1,4 +1,4 @@
-<div class="course-item" [appCourseHighlight]="data.created">
+<div class="course-item" [appCourseHighlight]="data.created" [ngClass]="{'course-item__top-rated': data.topRated}">
   <div class="course-item__heading">
     <h3 class="course-item__title">{{ data.title }}</h3>
     <div class="course-item__buttons">
@@ -8,6 +8,7 @@
       <button class="course-item__button btn btn-primary btn-round" (click)="deleteCourse(data.id)">
         <fa-icon [icon]="faTrash" size="sm"></fa-icon>
       </button>
+      <fa-icon *ngIf="data.topRated" [icon]="faStar" class="course-item__top-rated-icon"></fa-icon>
     </div>
     <div class="course-item__duration">{{ data.duration }} min</div>
     <div class="course-item__created">{{ data.created.toLocaleDateString() }}</div>

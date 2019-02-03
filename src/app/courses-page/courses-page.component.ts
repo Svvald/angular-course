@@ -21,7 +21,8 @@ export class CoursesPageComponent implements OnInit {
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-          Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`
+          Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
+        topRated: true
       },
       {
         id: 2,
@@ -30,7 +31,8 @@ export class CoursesPageComponent implements OnInit {
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`
+        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
+        topRated: false
       },
       {
         id: 3,
@@ -39,7 +41,8 @@ export class CoursesPageComponent implements OnInit {
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`
+        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
+        topRated: true
       },
       {
         id: 4,
@@ -48,7 +51,8 @@ export class CoursesPageComponent implements OnInit {
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`
+        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
+        topRated: false
       },
       {
         id: 5,
@@ -57,7 +61,8 @@ export class CoursesPageComponent implements OnInit {
         duration: 60,
         description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`
+        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
+        topRated: false
       }
     ];
   }

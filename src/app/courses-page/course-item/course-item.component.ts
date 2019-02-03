@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { Course } from '../course.model';
 
@@ -15,6 +15,7 @@ export class CourseItemComponent implements OnInit {
 
   public faPen = faPen;
   public faTrash = faTrash;
+  public faStar = faStar;
 
   constructor() { }
 
