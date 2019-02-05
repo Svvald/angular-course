@@ -1,6 +1,6 @@
 <div class="course-item" [appCourseHighlight]="data.created" [ngClass]="{'course-item__top-rated': data.topRated}">
   <div class="course-item__heading">
-    <h3 class="course-item__title">{{ data.title }}</h3>
+    <h3 class="course-item__title">{{ data.title | uppercase }}</h3>
     <div class="course-item__buttons">
       <button class="course-item__button btn btn-primary btn-round">
         <fa-icon [icon]="faPen" size="sm"></fa-icon>
@@ -10,8 +10,12 @@
       </button>
       <fa-icon *ngIf="data.topRated" [icon]="faStar" class="course-item__top-rated-icon"></fa-icon>
     </div>
-    <div class="course-item__duration">{{ data.duration }} min</div>
-    <div class="course-item__created">{{ data.created.toLocaleDateString() }}</div>
+    <div class="course-item__duration">
+      {{ data.duration | duration }}
+    </div>
+    <div class="course-item__created">
+      {{ data.created | date : "shortDate" }}
+    </div>
   </div>
   <div class="course-item__description">
     {{ data.description }}
