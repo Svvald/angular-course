@@ -7,13 +7,19 @@ import { CoursesControlsComponent } from './courses-controls/courses-controls.co
 import { CoursesPageComponent } from './courses-page.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CourseHighlightDirective } from './course-highlight/course-highlight.directive';
+import { DurationPipe } from './duration-pipe/duration.pipe';
+import { OrderByPipe } from './orderby-pipe/orderby.pipe';
+import { FilterPipe } from './filter-pipe/filter.pipe';
 
 @NgModule({
   declarations: [
     CoursesControlsComponent,
     CoursesPageComponent,
     CourseItemComponent,
-    CourseHighlightDirective
+    CourseHighlightDirective,
+    DurationPipe,
+    OrderByPipe,
+    FilterPipe
   ],
   imports: [
     CommonModule,
