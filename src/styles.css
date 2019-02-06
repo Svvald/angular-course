@@ -27,13 +27,17 @@ body {
 }
 
 .btn-primary {
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0);
   background-color: #7a81ff;
   color: white;
 }
 
 .btn-primary:hover {
   background: #d798c3;
+}
+
+.btn-primary:active {
+  background-color: #bd84ab;
 }
 
 .btn-outline {
@@ -43,7 +47,13 @@ body {
 }
 
 .btn-outline:hover {
-  border-color: #d798c3;
+  background-color: #7a81ff;
+  color: white;
+}
+
+.btn-outline:active {
+  border-color: #877cd0;
+  background-color: #877cd0;
 }
 
 input {
@@ -57,4 +67,28 @@ input {
 input:focus {
   border-color: #877cd0;
   color: #221b9c;
+}
+
+.modal-wrapper {
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  padding: 24px;
+  background-color: #f6f6fd;
+  border-radius: 4px;
+}
+
+.modal__buttons {
+  display: flex;
+  justify-content: space-between;
 }

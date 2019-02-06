@@ -3,73 +3,28 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from './course.model';
 import { OrderByPipe } from './orderby-pipe/orderby.pipe';
 import { FilterPipe } from './filter-pipe/filter.pipe';
+import { CoursesService } from '../services/courses-service/courses.service';
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styleUrls: ['./courses-page.component.css'],
-  providers: [OrderByPipe, FilterPipe]
 })
 export class CoursesPageComponent implements OnInit {
-  private initialData: Course[];
   public courses: Course[];
+  public showModal: boolean;
+  private deletingCourseID: number;
 
-  constructor(private orderByPipe: OrderByPipe, private filterPipe: FilterPipe) { }
+  private readonly ORDER_BY_DATE = 'created';
+
+  constructor(
+    private orderByPipe: OrderByPipe,
+    private filterPipe: FilterPipe,
+    private coursesService: CoursesService
+  ) { }
 
   ngOnInit() {
-    this.initialData = [
-      {
-        id: 1,
-        title: 'Course #1',
-        created: new Date(1546300800000),
-        duration: 60,
-        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-          Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
-        topRated: true
-      },
-      {
-        id: 2,
-        title: 'Course #2',
-        created: new Date(1543622400000),
-        duration: 120,
-        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
-        topRated: false
-      },
-      {
-        id: 3,
-        title: 'Course #3',
-        created: new Date(1543622400000),
-        duration: 127,
-        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
-        topRated: true
-      },
-      {
-        id: 4,
-        title: 'Course #4',
-        created: new Date(1551312000000),
-        duration: 30,
-        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
-        topRated: false
-      },
-      {
-        id: 5,
-        title: 'Course #5',
-        created: new Date(),
-        duration: 333,
-        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Morbi risus diam, rhoncus vel lectus vel, varius interdum est.
-        Praesent magna odio, porta in convallis et, varius eu enim. Ut id.`,
-        topRated: false
-      }
-    ];
-    this.courses = this.orderByPipe.transform(this.initialData, 'created');
+    this.courses = this.orderByPipe.transform(this.coursesService.getCourses(), this.ORDER_BY_DATE);
   }
 
   onLoadMore() {
@@ -77,11 +32,22 @@ export class CoursesPageComponent implements OnInit {
   }
 
   onDeleting(id: number) {
-    console.log(`Deleting course: ${id}`);
+    this.showModal = true;
+    this.deletingCourseID = id;
+  }
+
+  onDeleteConfirm() {
+    this.showModal = false;
+    this.coursesService.deleteCourse(this.deletingCourseID);
+    this.courses = this.orderByPipe.transform(this.coursesService.getCourses(), this.ORDER_BY_DATE);
+  }
+
+  onDeleteCancel() {
+    this.showModal = false;
   }
 
   onCourseSearch(name: string) {
-    this.courses = this.filterPipe.transform(this.initialData, ['title', name]);
+    this.courses = this.filterPipe.transform(this.courses, ['title', name]);
   }
 
 }
