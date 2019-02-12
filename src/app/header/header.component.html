@@ -3,10 +3,12 @@
     <img src="../../assets/img/logo.png">
     <h3>Videoportal</h3>
   </a>
-  <div class="header__username">
-    Username
-  </div>
-  <div class="header__logout">
-    <button class="btn btn-outline">Log out</button>
+  <div class="header__user-controls" *ngIf="authService.isAuthenticated">
+    <div class="header__username">
+      Username
+    </div>
+    <div class="header__logout">
+      <button class="btn btn-outline" (click)="onLogOut()">Log out</button>
+    </div>
   </div>
 </div>

@@ -23,6 +23,11 @@ a.header__logo {
   height: 32px;
 }
 
+.header__user-controls {
+  display: flex;
+  align-items: center;
+}
+
 .header__username {
   margin-right: 16px;
 }
