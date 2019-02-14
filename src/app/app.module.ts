@@ -23,6 +23,8 @@ import { ROUTES } from './app.routes';
     FooterComponent,
     BreadcrumbsComponent,
     LoginPageComponent,
+    OrderByPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
