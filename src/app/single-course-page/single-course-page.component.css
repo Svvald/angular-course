@@ -1,0 +1,23 @@
+.course-data__container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.course-data__input-group {
+    margin-bottom: 16px;
+}
+
+.course-data__description {
+    resize: none;
+}
+
+.course-data__duration-group {
+    display: flex;
+    align-items: center;
+}
+
+.course-data__buttons {
+    display: flex;
+    justify-content: flex-end;
+}

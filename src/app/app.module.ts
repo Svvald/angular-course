@@ -11,10 +11,9 @@ import { FooterComponent } from './footer/footer.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 
-import { OrderByPipe } from './courses-page/orderby-pipe/orderby.pipe';
-import { FilterPipe } from './courses-page/filter-pipe/filter.pipe';
-
 import { ROUTES } from './app.routes';
+import { SingleCoursePageComponent } from './single-course-page/single-course-page.component';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -23,16 +22,15 @@ import { ROUTES } from './app.routes';
     FooterComponent,
     BreadcrumbsComponent,
     LoginPageComponent,
-    OrderByPipe,
-    FilterPipe
+    SingleCoursePageComponent,
   ],
   imports: [
     BrowserModule,
     CoursesPageModule,
     FormsModule,
+    PipesModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [OrderByPipe, FilterPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

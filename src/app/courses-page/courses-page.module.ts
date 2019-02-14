@@ -7,7 +7,7 @@ import { CoursesControlsComponent } from './courses-controls/courses-controls.co
 import { CoursesPageComponent } from './courses-page.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CourseHighlightDirective } from './course-highlight/course-highlight.directive';
-import { DurationPipe } from './duration-pipe/duration.pipe';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -15,12 +15,12 @@ import { DurationPipe } from './duration-pipe/duration.pipe';
     CoursesPageComponent,
     CourseItemComponent,
     CourseHighlightDirective,
-    DurationPipe,
   ],
   imports: [
     CommonModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PipesModule
   ],
   exports: [
     CoursesPageComponent

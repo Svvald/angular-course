@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Course } from './course.model';
-import { OrderByPipe } from './orderby-pipe/orderby.pipe';
-import { FilterPipe } from './filter-pipe/filter.pipe';
 import { CoursesService } from '../services/courses-service/courses.service';
+import { OrderByPipe } from '../pipes/orderby-pipe/orderby.pipe';
+import { FilterPipe } from '../pipes/filter-pipe/filter.pipe';
 
 @Component({
   selector: 'app-courses-page',

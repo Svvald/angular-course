@@ -69,6 +69,24 @@ input:focus {
   color: #221b9c;
 }
 
+textarea {
+  border: 1px solid #d0d0e9;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #d0d0e9;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+textarea:focus {
+  border-color: #877cd0;
+  color: #221b9c;
+}
+
+label {
+  font-size: 12px;
+  color: #221b9c;
+}
+
 .modal-wrapper {
   z-index: 999;
   position: absolute;
@@ -91,4 +109,16 @@ input:focus {
 .modal__buttons {
   display: flex;
   justify-content: space-between;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.mr-16 {
+  margin-right: 16px;
+}
+
+.ml-16 {
+  margin-left: 16px;
 }
