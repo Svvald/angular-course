@@ -1,0 +1,10 @@
+<div class="breadcrumbs">
+  <ng-container *ngIf="courseName; else simpleHeader">
+    <a [routerLink]="[ '/courses' ]">Courses</a>
+    <span>/</span>
+    <span>{{ courseName }}</span>
+  </ng-container>
+  <ng-template #simpleHeader>
+    <span>Courses</span>
+  </ng-template>
+</div>

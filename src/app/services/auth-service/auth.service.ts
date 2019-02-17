@@ -9,7 +9,7 @@ interface IUser {
   providedIn: 'root'
 })
 export class AuthService {
-  private _auth: boolean;
+  private _auth = true;
 
   constructor() { }
 
@@ -18,13 +18,11 @@ export class AuthService {
   }
 
   logIn(data: IUser): void {
-    console.log('Logging in');
     Object.keys(data).map(key => localStorage.setItem(key, data[key]));
     this._auth = true;
   }
 
   logOut(): void {
-    console.log('Logging out');
     localStorage.clear();
     this._auth = false;
   }

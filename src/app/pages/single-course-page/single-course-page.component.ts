@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { CoursesService } from '../services/courses-service/courses.service';
-import { Course, ICourse } from '../courses-page/course.model';
+import { ICourse } from '../../entities/course.model';
+
+import { CoursesService } from '../../services/courses-service/courses.service';
 
 @Component({
   selector: 'app-single-course-page',
@@ -25,7 +26,7 @@ export class SingleCoursePageComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(data => {
       const numberId = parseInt(data.id, 10);
-      if (numberId) {
+      if (typeof numberId === 'number') {
         const course = this.coursesService.getCourse(numberId);
 
         this.id = course.id;

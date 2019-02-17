@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Course } from './course.model';
-import { CoursesService } from '../services/courses-service/courses.service';
-import { OrderByPipe } from '../pipes/orderby-pipe/orderby.pipe';
-import { FilterPipe } from '../pipes/filter-pipe/filter.pipe';
+import { Course } from '../../entities/course.model';
+
+import { CoursesService } from '../../services/courses-service/courses.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
+import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
 
 @Component({
   selector: 'app-courses-page',

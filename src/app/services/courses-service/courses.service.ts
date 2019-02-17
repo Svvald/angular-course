@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Course } from 'src/app/courses-page/course.model';
+import { Course } from '../../entities/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +70,8 @@ export class CoursesService {
   }
 
   getCourse(id: number): Course {
+    console.log(id);
+    console.log(this.courses.find((course) => course.id === id));
     return this.courses.find((course) => course.id === id);
   }
 

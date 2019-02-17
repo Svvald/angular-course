@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -7,10 +6,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./breadcrumbs.component.css']
 })
 export class BreadcrumbsComponent implements OnInit {
+  @Input() courseName?: string;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

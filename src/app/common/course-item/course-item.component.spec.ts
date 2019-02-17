@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CourseItemComponent } from './course-item.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Component } from '@angular/core';
-import { Course } from '../course.model';
+import { Course } from '../entities/course.model';
 
 describe('CourseItemComponent AS CLASS', () => {
   let component: CourseItemComponent;

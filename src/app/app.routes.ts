@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
 
-import { CoursesPageComponent } from './courses-page/courses-page.component';
-import { SingleCoursePageComponent } from './single-course-page/single-course-page.component';
-import { NoContentPageComponent } from './no-content-page/no-content-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
+import { SingleCoursePageComponent } from './pages/single-course-page/single-course-page.component';
+import { NoContentPageComponent } from './pages/no-content-page/no-content-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 import { AuthGuard } from './guards/auth/auth.guard';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { faPen, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 
-import { Course } from '../course.model';
+import { Course } from '../../entities/course.model';
 
 @Component({
   selector: 'app-course-item',
