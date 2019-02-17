@@ -5,11 +5,13 @@ import { SingleCoursePageComponent } from './single-course-page/single-course-pa
 import { NoContentPageComponent } from './no-content-page/no-content-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 
+import { AuthGuard } from './guards/auth/auth.guard';
+
 export const ROUTES: Route[] = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
-  { path: 'courses', component: CoursesPageComponent },
-  { path: 'courses/:id', component: SingleCoursePageComponent },
-  { path: 'courses/new', component: SingleCoursePageComponent },
+  { path: 'courses', component: CoursesPageComponent, canActivate: [AuthGuard] },
+  { path: 'courses/:id', component: SingleCoursePageComponent, canActivate: [AuthGuard] },
+  { path: 'courses/new', component: SingleCoursePageComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginPageComponent },
   { path: '**', component: NoContentPageComponent }
 ];
