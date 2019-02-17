@@ -1,5 +1,5 @@
 <app-breadcrumbs></app-breadcrumbs>
-<app-courses-controls (searchCourses)="onCourseSearch($event)" (addCourse)="onAddCourse($event)"></app-courses-controls>
+<app-courses-controls (searchCourses)="onCourseSearch($event)" (addCourse)="onAddCourse()"></app-courses-controls>
 <ng-container *ngIf="courses.length > 0; else noData">
   <app-course-item *ngFor="let course of courses" [data]="course" (deleteCourse)="onDeleteCourse($event)" (editCourse)="onEditCourse($event)"></app-course-item>
   <div class="courses-page__load-more" (click)="onLoadMore()">
