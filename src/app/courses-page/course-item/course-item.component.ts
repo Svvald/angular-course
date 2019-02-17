@@ -12,7 +12,8 @@ import { Course } from '../course.model';
 export class CourseItemComponent implements OnInit {
 
   @Input() data: Course;
-  @Output() deleting = new EventEmitter<number>();
+  @Output() deleteCourse = new EventEmitter<number>();
+  @Output() editCourse = new EventEmitter<number>();
 
   public faPen = faPen;
   public faTrash = faTrash;
@@ -23,8 +24,11 @@ export class CourseItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteCourse(id: number) {
-    this.deleting.emit(id);
+  onDelete(id: number) {
+    this.deleteCourse.emit(id);
   }
 
+  onEdit(id: number) {
+    this.editCourse.emit(id);
+  }
 }

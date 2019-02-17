@@ -1,4 +1,4 @@
-export interface CourseInterface {
+export interface ICourse {
   id: number;
   title: string;
   created: Date;
@@ -7,7 +7,7 @@ export interface CourseInterface {
   topRated: boolean;
 }
 
-export class Course implements CourseInterface {
+export class Course implements ICourse {
   id: number;
   title: string;
   created: Date;
@@ -15,5 +15,12 @@ export class Course implements CourseInterface {
   description: string;
   topRated: boolean;
 
-  constructor() { }
+  constructor(data: ICourse) {
+    this.id = data.id;
+    this.title = data.title;
+    this.created = data.created;
+    this.duration = data.duration;
+    this.description = data.description;
+    this.topRated = data.topRated;
+  }
 }

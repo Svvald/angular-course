@@ -10,7 +10,7 @@ export class CoursesService {
 
   private courses: Course[] = [
     {
-      id: 1,
+      id: 0,
       title: 'Course #1',
       created: new Date(1546300800000),
       duration: 60,
@@ -20,7 +20,7 @@ export class CoursesService {
       topRated: true
     },
     {
-      id: 2,
+      id: 1,
       title: 'Course #2',
       created: new Date(1543622400000),
       duration: 120,
@@ -30,7 +30,7 @@ export class CoursesService {
       topRated: false
     },
     {
-      id: 3,
+      id: 2,
       title: 'Course #3',
       created: new Date(1543622400000),
       duration: 127,
@@ -40,7 +40,7 @@ export class CoursesService {
       topRated: true
     },
     {
-      id: 4,
+      id: 3,
       title: 'Course #4',
       created: new Date(1551312000000),
       duration: 30,
@@ -50,7 +50,7 @@ export class CoursesService {
       topRated: false
     },
     {
-      id: 5,
+      id: 4,
       title: 'Course #5',
       created: new Date(),
       duration: 333,
@@ -73,11 +73,11 @@ export class CoursesService {
     return this.courses.find((course) => course.id === id);
   }
 
-  updateCourse(id: number, data: Course): void {
+  updateCourse(id: number, data: any): void {
     const courseIndexToUpdate = this.courses.findIndex((course) => course.id === id);
     this.courses = [
       ...this.courses.slice(0, courseIndexToUpdate),
-      data,
+      { ...this.courses[courseIndexToUpdate], ...data },
       ...this.courses.slice(courseIndexToUpdate + 1, this.courses.length)
     ];
   }

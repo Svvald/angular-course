@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Course } from './course.model';
 import { CoursesService } from '../services/courses-service/courses.service';
@@ -20,7 +21,8 @@ export class CoursesPageComponent implements OnInit {
   constructor(
     private orderByPipe: OrderByPipe,
     private filterPipe: FilterPipe,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class CoursesPageComponent implements OnInit {
     console.log('Loading more courses');
   }
 
-  onDeleting(id: number) {
+  onDeleteCourse(id: number) {
     this.showModal = true;
     this.deletingCourseID = id;
   }
@@ -48,6 +50,14 @@ export class CoursesPageComponent implements OnInit {
 
   onCourseSearch(name: string) {
     this.courses = this.filterPipe.transform(this.courses, ['title', name]);
+  }
+
+  onAddCourse() {
+    this.router.navigateByUrl('courses/new');
+  }
+
+  onEditCourse(id: number) {
+    this.router.navigateByUrl(`courses/${id}`);
   }
 
 }

@@ -14,6 +14,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { ROUTES } from './app.routes';
 import { SingleCoursePageComponent } from './single-course-page/single-course-page.component';
 import { PipesModule } from './pipes/pipes.module';
+import { NoContentPageComponent } from './no-content-page/no-content-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PipesModule } from './pipes/pipes.module';
     BreadcrumbsComponent,
     LoginPageComponent,
     SingleCoursePageComponent,
+    NoContentPageComponent,
   ],
   imports: [
     BrowserModule,
