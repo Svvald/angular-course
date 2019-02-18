@@ -1,33 +1,56 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+interface IAuth {
+  login: string;
+  password: string;
+}
 
 interface IUser {
-  username: string;
-  token: string;
+  id: number;
+  fakeToken: string;
+  name: {
+    first: string;
+    last: string;
+  };
+  password: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private _auth = true;
+  private readonly BASE_URL = 'http://localhost:3004/auth';
+  private auth;
 
-  constructor() { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   get isAuthenticated() {
-    return this._auth;
+    return this.auth;
   }
 
-  logIn(data: IUser): void {
-    Object.keys(data).map(key => localStorage.setItem(key, data[key]));
-    this._auth = true;
+  logIn(data: IAuth): void {
+    this.http.post(`${this.BASE_URL}/login`, data).subscribe(
+      res => {
+        this.auth = true;
+        Object.keys(res).map(key => localStorage.setItem(key, res[key]));
+        this.router.navigateByUrl('courses');
+      },
+      error => console.error(error.message)
+    );
   }
 
   logOut(): void {
     localStorage.clear();
-    this._auth = false;
+    this.auth = false;
   }
 
-  getUserInfo(): string {
-    return localStorage.getItem('username');
+  getUserInfo(): Observable<IUser> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ 'Authorization': token });
+
+    return this.http.post<IUser>(`${this.BASE_URL}/userinfo`, {}, { headers });
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth-service/auth.service';
 
@@ -9,17 +8,17 @@ import { AuthService } from '../../services/auth-service/auth.service';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-  public email: string;
+  public login: string;
   public password: string;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   onLoginClick() {
-    this.authService.logIn({username: 'Username', token: 'TOKEN'});
-    this.router.navigateByUrl('courses');
+    this.authService.logIn({login: this.login, password: this.password});
+    this.authService.getUserInfo();
   }
 
 }
