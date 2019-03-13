@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,8 @@ import { CoursesPageComponent } from './pages/courses-page/courses-page.componen
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SingleCoursePageComponent } from './pages/single-course-page/single-course-page.component';
 import { NoContentPageComponent } from './pages/no-content-page/no-content-page.component';
+
+import { TokenInterceptor } from './services/token-interceptor';
 
 import { ROUTES } from './app.routes';
 
@@ -49,6 +51,13 @@ import { ROUTES } from './app.routes';
     PipesModule,
     FontAwesomeModule,
     RouterModule.forRoot(ROUTES)
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

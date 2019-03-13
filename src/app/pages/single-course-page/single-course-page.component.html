@@ -1,18 +1,18 @@
 <app-breadcrumbs [courseName]="this.title"></app-breadcrumbs>
 <div class="course-data__container">
   <label>Title</label>
-  <input class="mb-16" type="text" [(ngModel)]="title">
+  <input class="mb-16" type="text" [(ngModel)]="name">
 
   <label>Description</label>
   <textarea class="course-data__description mb-16" [(ngModel)]="description"></textarea>
 
   <label>Date</label>
-  <input class="mb-16" type="date" [(ngModel)]="created">
+  <input class="mb-16" type="date" [(ngModel)]="date">
 
   <label>Duration</label>
   <div class="course-data__duration-group mb-16">
-    <input class="mr-16" type="number" min="0" [(ngModel)]="durationMinutes">
-    <span><b>{{ durationMinutes | duration }}</b></span>
+    <input class="mr-16" type="number" min="0" [(ngModel)]="length">
+    <span><b>{{ length | duration }}</b></span>
   </div>
 
   <label>Authors</label>

@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Course } from '../../entities/course.model';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
-import { AuthService } from '../../services/auth-service/auth.service';
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-courses-page',
@@ -14,11 +14,14 @@ import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
   styleUrls: ['./courses-page.component.css'],
 })
 export class CoursesPageComponent implements OnInit {
-  public courses: Course[];
+  public courses: Course[] = [];
   public showModal: boolean;
-  private deletingCourseID: number;
 
-  private readonly ORDER_BY_DATE = 'created';
+  private deletingCourseID: number;
+  private count = 5;
+
+  private readonly ORDER_BY_DATE = 'date';
+  private readonly COUNT_INC = 5;
 
   constructor(
     private orderByPipe: OrderByPipe,
@@ -28,11 +31,24 @@ export class CoursesPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.courses = this.orderByPipe.transform(this.coursesService.getCourses(), this.ORDER_BY_DATE);
+    this.coursesService.getCourses(this.count).subscribe(
+      res => {
+        this.courses = res;
+      },
+      err => console.error(err.message)
+    );
   }
 
   onLoadMore() {
-    console.log('Loading more courses');
+    this.count += this.COUNT_INC;
+    this.coursesService.getCourses(this.count).subscribe(
+      res => {
+        // TODO: Change behavior of orderByPipe
+        // this.courses = this.orderByPipe.transform(res, this.ORDER_BY_DATE);
+        this.courses = res;
+      },
+      err => console.error(err.message)
+    );
   }
 
   onDeleteCourse(id: number) {
@@ -40,10 +56,18 @@ export class CoursesPageComponent implements OnInit {
     this.deletingCourseID = id;
   }
 
+  // TODO: Rewrite modal position with scroll
+  // TODO: Implement toast on delete success and fail
   onDeleteConfirm() {
     this.showModal = false;
-    this.coursesService.deleteCourse(this.deletingCourseID);
-    this.courses = this.orderByPipe.transform(this.coursesService.getCourses(), this.ORDER_BY_DATE);
+
+    concat(
+      this.coursesService.deleteCourse(this.deletingCourseID),
+      this.coursesService.getCourses(this.count)
+    ).subscribe(
+      res => this.courses = res as Course[],
+      err => console.error(err.message)
+    );
   }
 
   onDeleteCancel() {
@@ -51,7 +75,12 @@ export class CoursesPageComponent implements OnInit {
   }
 
   onCourseSearch(name: string) {
-    this.courses = this.filterPipe.transform(this.courses, ['title', name]);
+    this.coursesService.searchCourses(name).subscribe(
+      res => {
+        this.courses = res;
+      },
+      err => console.error(err.message)
+    );
   }
 
   onAddCourse() {
@@ -61,5 +90,4 @@ export class CoursesPageComponent implements OnInit {
   onEditCourse(id: number) {
     this.router.navigateByUrl(`courses/${id}`);
   }
-
 }

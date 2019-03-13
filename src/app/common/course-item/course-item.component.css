@@ -10,7 +10,7 @@
 }
 
 .course-item:hover {
-  box-shadow: 0 0 16px #c4c7fc;
+  box-shadow: 4px 4px 4px #c4c7fc;
 }
 
 .course-item__heading {

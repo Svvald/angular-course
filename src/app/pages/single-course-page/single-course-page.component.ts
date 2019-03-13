@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ICourse } from '../../entities/course.model';
-
 import { CoursesService } from '../../services/courses-service/courses.service';
 
 @Component({
@@ -12,10 +10,10 @@ import { CoursesService } from '../../services/courses-service/courses.service';
 })
 export class SingleCoursePageComponent implements OnInit {
   public id?: number;
-  public title: string;
+  public name: string;
   public description: string;
-  public created: Date;
-  public durationMinutes = 0;
+  public date: Date;
+  public length = 0;
 
   constructor(
     private router: Router,
@@ -25,15 +23,18 @@ export class SingleCoursePageComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(data => {
-      const numberId = parseInt(data.id, 10);
-      if (typeof numberId === 'number') {
-        const course = this.coursesService.getCourse(numberId);
-
-        this.id = course.id;
-        this.title = course.title;
-        this.description = course.description;
-        this.created = course.created;
-        this.durationMinutes = course.duration;
+      const id = parseInt(data.id, 10);
+      if (!isNaN(id)) {
+        this.coursesService.getCourse(id).subscribe(
+          res => {
+            this.id = res.id;
+            this.name = res.name;
+            this.description = res.description;
+            this.date = res.date;
+            this.length = res.length;
+          },
+          err => console.error(err)
+        );
       }
     });
   }
@@ -48,27 +49,29 @@ export class SingleCoursePageComponent implements OnInit {
     this.saveExistingCourse();
   }
 
+  // TODO: Implement toast on create/update success and fail
   saveNewCourse() {
-    const data: ICourse = {
-      id: this.coursesService.getCourses().length,
-      title: this.title,
+    this.coursesService.createCourse({
+      id: 0,
+      name: this.name,
       description: this.description,
-      created: this.created,
-      duration: this.durationMinutes,
-      topRated: false
-    };
+      date: this.date,
+      length: this.length,
+      isTopRated: false
+    }).subscribe();
 
-    this.coursesService.createCourse(data);
     this.router.navigateByUrl('courses');
   }
 
   saveExistingCourse() {
-    this.coursesService.updateCourse(this.id, {
-      title: this.title,
+    this.coursesService.updateCourse({
+      id: this.id,
+      name: this.name,
       description: this.description,
-      created: this.created,
-      duration: this.durationMinutes
-    });
+      date: this.date,
+      length: this.length,
+      isTopRated: false
+    }).subscribe();
 
     this.router.navigateByUrl('courses');
   }
