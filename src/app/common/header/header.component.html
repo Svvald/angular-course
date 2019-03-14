@@ -5,7 +5,7 @@
   </a>
   <div class="header__user-controls" *ngIf="authService.isAuthenticated">
     <div class="header__username">
-      Username
+      {{ username }}
     </div>
     <div class="header__logout">
       <button class="btn btn-outline" (click)="onLogOut()">Log out</button>

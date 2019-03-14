@@ -23,18 +23,16 @@ interface IUser {
 })
 export class AuthService {
   private readonly BASE_URL = 'http://localhost:3004/auth';
-  private auth;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  get isAuthenticated() {
-    return this.auth;
+  public isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
   }
 
-  logIn(data: IAuth): void {
+  public logIn(data: IAuth): void {
     this.http.post(`${this.BASE_URL}/login`, data).subscribe(
       res => {
-        this.auth = true;
         Object.keys(res).map(key => localStorage.setItem(key, res[key]));
         this.router.navigateByUrl('courses');
       },
@@ -42,12 +40,11 @@ export class AuthService {
     );
   }
 
-  logOut(): void {
+  public logOut(): void {
     localStorage.clear();
-    this.auth = false;
   }
 
-  getUserInfo(): Observable<IUser> {
+  public getUserInfo(): Observable<IUser> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': token });
 
