@@ -1,7 +1,6 @@
 <div class="controls">
   <div class="controls__search">
-    <input type="text" [(ngModel)]="searchingCourseName">
-    <button class="btn btn-outline" (click)="onSearch()">Search</button>
+    <input type="text" (keyup)="keyUp$.next($event)" placeholder="Enter search string">
   </div>
   <div class="controls__add-course">
     <button class="btn btn-primary" (click)="onAdd()">Add course</button>
