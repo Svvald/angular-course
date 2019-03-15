@@ -87,9 +87,9 @@ label {
   color: #221b9c;
 }
 
-.modal-wrapper {
+.overlay {
   z-index: 999;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

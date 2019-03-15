@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
+import { LoaderService } from 'src/app/common/loader/service/loader.service';
 
 @Component({
   selector: 'app-single-course-page',
@@ -18,13 +19,15 @@ export class SingleCoursePageComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(data => {
       const id = parseInt(data.id, 10);
       if (!isNaN(id)) {
+        this.loaderService.toggle(true);
         this.coursesService.getCourse(id).subscribe(
           res => {
             this.id = res.id;
@@ -32,6 +35,8 @@ export class SingleCoursePageComponent implements OnInit {
             this.description = res.description;
             this.date = res.date;
             this.length = res.length;
+
+            this.loaderService.toggle(false);
           },
           err => console.error(err)
         );
@@ -51,6 +56,7 @@ export class SingleCoursePageComponent implements OnInit {
 
   // TODO: Implement toast on create/update success and fail
   saveNewCourse() {
+    this.loaderService.toggle(true);
     this.coursesService.createCourse({
       id: 0,
       name: this.name,
@@ -58,12 +64,17 @@ export class SingleCoursePageComponent implements OnInit {
       date: this.date,
       length: this.length,
       isTopRated: false
-    }).subscribe();
-
-    this.router.navigateByUrl('courses');
+    }).subscribe(
+      res => {
+        this.loaderService.toggle(false);
+        this.router.navigateByUrl('courses');
+      },
+      err => console.log(err.message)
+    );
   }
 
   saveExistingCourse() {
+    this.loaderService.toggle(true);
     this.coursesService.updateCourse({
       id: this.id,
       name: this.name,
@@ -71,8 +82,12 @@ export class SingleCoursePageComponent implements OnInit {
       date: this.date,
       length: this.length,
       isTopRated: false
-    }).subscribe();
-
-    this.router.navigateByUrl('courses');
+    }).subscribe(
+      res => {
+        this.loaderService.toggle(false);
+        this.router.navigateByUrl('courses');
+      },
+      err => console.log(err.message)
+    );
   }
 }

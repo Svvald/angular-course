@@ -17,13 +17,14 @@ import { FooterComponent } from './common/footer/footer.component';
 import { BreadcrumbsComponent } from './common/breadcrumbs/breadcrumbs.component';
 import { CoursesControlsComponent } from './common/courses-controls/courses-controls.component';
 import { CourseItemComponent } from './common/course-item/course-item.component';
+import { LoaderComponent } from './common/loader/component/loader.component';
 
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SingleCoursePageComponent } from './pages/single-course-page/single-course-page.component';
 import { NoContentPageComponent } from './pages/no-content-page/no-content-page.component';
 
-import { TokenInterceptor } from './services/token-interceptor';
+import { TokenInterceptor } from './services/token-interceptor/token-interceptor';
 
 import { ROUTES } from './app.routes';
 
@@ -43,6 +44,7 @@ import { ROUTES } from './app.routes';
     LoginPageComponent,
     SingleCoursePageComponent,
     NoContentPageComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
