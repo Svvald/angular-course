@@ -3,20 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-interface IAuth {
-  login: string;
-  password: string;
-}
-
-interface IUser {
-  id: number;
-  fakeToken: string;
-  name: {
-    first: string;
-    last: string;
-  };
-  password: string;
-}
+import { IAuth, IUser, IToken } from '../../entities/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,18 +17,8 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  public logIn(data: IAuth): void {
-    this.http.post(`${this.BASE_URL}/login`, data).subscribe(
-      res => {
-        Object.keys(res).map(key => localStorage.setItem(key, res[key]));
-        this.router.navigateByUrl('courses');
-      },
-      error => console.error(error.message)
-    );
-  }
-
-  public logOut(): void {
-    localStorage.clear();
+  public logIn(data: IAuth): Observable<IToken> {
+    return this.http.post<IToken>(`${this.BASE_URL}/login`, data);
   }
 
   public getUserInfo(): Observable<IUser> {

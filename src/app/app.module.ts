@@ -27,6 +27,11 @@ import { NoContentPageComponent } from './pages/no-content-page/no-content-page.
 import { TokenInterceptor } from './services/token-interceptor/token-interceptor';
 
 import { ROUTES } from './app.routes';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './store/reducers/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/effects/auth.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -52,7 +57,13 @@ import { ROUTES } from './app.routes';
     FormsModule,
     PipesModule,
     FontAwesomeModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    StoreModule.forRoot({ userdata: authReducer }),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false
+    })
   ],
   providers: [
     {

@@ -1,29 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthState } from '../../store/reducers/auth.reducer';
+import { Logout, GetUserData } from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private store: Store<AuthState>) { }
 
   public username: string;
+  private unsubscribe$ = new Subject();
 
   ngOnInit() {
-    this.authService.getUserInfo().subscribe(
-      res => this.username = `${res.name.first} ${res.name.last}`,
-      err => console.error(err.message)
+    if (this.authService.isAuthenticated()) {
+      this.store.dispatch(new GetUserData());
+    }
+
+    this.store.select('userdata').pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(userdata =>
+      this.username = `${userdata.name.first} ${userdata.name.last}`
     );
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+  }
+
   onLogOut() {
-    this.authService.logOut();
-    this.router.navigateByUrl('login');
+    this.store.dispatch(new Logout());
   }
 
 }
