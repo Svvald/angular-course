@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { concat } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { concat, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Course } from '../../entities/course.model';
 
@@ -10,12 +12,15 @@ import { LoaderService } from 'src/app/common/loader/service/loader.service';
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
 
+import { GetCourses } from '../../store/actions/courses.actions';
+import { CoursesState } from '../../store/reducers/courses.reducer';
+
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styleUrls: ['./courses-page.component.css'],
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent implements OnInit, OnDestroy {
   public courses: Course[] = [];
   public showModal: boolean;
 
@@ -25,37 +30,35 @@ export class CoursesPageComponent implements OnInit {
   private readonly ORDER_BY_DATE = 'date';
   private readonly COUNT_INC = 5;
 
+  private unsubscribe$ = new Subject();
+
   constructor(
     private orderByPipe: OrderByPipe,
     private filterPipe: FilterPipe,
     private coursesService: CoursesService,
     private loaderService: LoaderService,
-    private router: Router
+    private router: Router,
+    private store: Store<CoursesState>
   ) { }
 
   ngOnInit() {
-    this.loaderService.toggle(true);
-    this.coursesService.getCourses(this.count).subscribe(
-      res => {
-        this.courses = res;
-        this.loaderService.toggle(false);
-      },
-      err => console.error(err.message)
+    this.store.dispatch(new GetCourses(this.count));
+    this.store.select('courses').pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(courses =>
+      this.courses = courses.coursesList
     );
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
   }
 
   onLoadMore() {
     this.count += this.COUNT_INC;
-    this.loaderService.toggle(true);
-    this.coursesService.getCourses(this.count).subscribe(
-      res => {
-        // TODO: Change behavior of orderByPipe
-        // this.courses = this.orderByPipe.transform(res, this.ORDER_BY_DATE);
-        this.courses = res;
-        this.loaderService.toggle(false);
-      },
-      err => console.error(err.message)
-    );
+    this.store.dispatch(new GetCourses(this.count));
+    // TODO: Change behavior of orderByPipe
+    // this.courses = this.orderByPipe.transform(res, this.ORDER_BY_DATE);
   }
 
   onDeleteCourse(id: number) {
@@ -63,7 +66,6 @@ export class CoursesPageComponent implements OnInit {
     this.deletingCourseID = id;
   }
 
-  // TODO: Rewrite modal position with scroll
   // TODO: Implement toast on delete success and fail
   onDeleteConfirm() {
     this.showModal = false;

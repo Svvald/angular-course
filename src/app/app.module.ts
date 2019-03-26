@@ -3,6 +3,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -27,11 +30,12 @@ import { NoContentPageComponent } from './pages/no-content-page/no-content-page.
 import { TokenInterceptor } from './services/token-interceptor/token-interceptor';
 
 import { ROUTES } from './app.routes';
-import { StoreModule } from '@ngrx/store';
+
 import { authReducer } from './store/reducers/auth.reducer';
-import { EffectsModule } from '@ngrx/effects';
+import { coursesReducer } from './store/reducers/courses.reducer';
+
 import { AuthEffects } from './store/effects/auth.effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CoursesEffects } from './store/effects/courses.effects';
 
 @NgModule({
   declarations: [
@@ -58,8 +62,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     PipesModule,
     FontAwesomeModule,
     RouterModule.forRoot(ROUTES),
-    StoreModule.forRoot({ userdata: authReducer }),
-    EffectsModule.forRoot([AuthEffects]),
+    StoreModule.forRoot({ userdata: authReducer, courses: coursesReducer }),
+    EffectsModule.forRoot([AuthEffects, CoursesEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false
