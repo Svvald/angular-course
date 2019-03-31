@@ -17,7 +17,7 @@ body {
 .btn {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -58,7 +58,7 @@ body {
 
 input {
   border: 1px solid #d0d0e9;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 8px 16px;
   color: #d0d0e9;
   background-color: rgba(0, 0, 0, 0);
@@ -71,7 +71,7 @@ input:focus {
 
 textarea {
   border: 1px solid #d0d0e9;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 8px 16px;
   color: #d0d0e9;
   background-color: rgba(0, 0, 0, 0);
