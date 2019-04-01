@@ -1,47 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
+import { Course } from '../../entities/course.model';
 import { CoursesService } from '../../services/courses-service/courses.service';
-import { LoaderService } from 'src/app/common/loader/service/loader.service';
+import { LoaderService } from '../../common/loader/service/loader.service';
+import { ApplicationState } from '../../store/states';
+import { UpdateCourse } from '../../store/actions/courses.actions';
 
 @Component({
   selector: 'app-single-course-page',
   templateUrl: './single-course-page.component.html',
   styleUrls: ['./single-course-page.component.css']
 })
-export class SingleCoursePageComponent implements OnInit {
+export class SingleCoursePageComponent implements OnInit, OnDestroy {
   public id?: number;
   public name: string;
   public description: string;
   public date: Date;
   public length = 0;
 
+  public course: Course = {
+    id: 0,
+    date: new Date(0),
+    description: '',
+    isTopRated: false,
+    length: 0,
+    name: ''
+  };
+
+  private unsubscribe$ = new Subject();
+
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private coursesService: CoursesService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private store: Store<ApplicationState>
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(data => {
-      const id = parseInt(data.id, 10);
-      if (!isNaN(id)) {
-        this.loaderService.toggle(true);
-        this.coursesService.getCourse(id).subscribe(
-          res => {
-            this.id = res.id;
-            this.name = res.name;
-            this.description = res.description;
-            this.date = res.date;
-            this.length = res.length;
+    if (this.isEditing()) {
+      this.store.select('courses').pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(courses =>
+        this.course = courses.selectedCourse
+      );
+    }
+  }
 
-            this.loaderService.toggle(false);
-          },
-          err => console.error(err)
-        );
-      }
-    });
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+  }
+
+  private isEditing(): boolean {
+    return !this.router.url.includes('new');
   }
 
   onCancel() {
@@ -49,22 +63,15 @@ export class SingleCoursePageComponent implements OnInit {
   }
 
   onSave() {
-    this.router.url.includes('new') ?
-    this.saveNewCourse() :
-    this.saveExistingCourse();
+    this.isEditing() ?
+    this.saveExistingCourse() :
+    this.saveNewCourse();
   }
 
   // TODO: Implement toast on create/update success and fail
   saveNewCourse() {
     this.loaderService.toggle(true);
-    this.coursesService.createCourse({
-      id: 0,
-      name: this.name,
-      description: this.description,
-      date: this.date,
-      length: this.length,
-      isTopRated: false
-    }).subscribe(
+    this.coursesService.createCourse(this.course).subscribe(
       res => {
         this.loaderService.toggle(false);
         this.router.navigateByUrl('courses');
@@ -74,20 +81,6 @@ export class SingleCoursePageComponent implements OnInit {
   }
 
   saveExistingCourse() {
-    this.loaderService.toggle(true);
-    this.coursesService.updateCourse({
-      id: this.id,
-      name: this.name,
-      description: this.description,
-      date: this.date,
-      length: this.length,
-      isTopRated: false
-    }).subscribe(
-      res => {
-        this.loaderService.toggle(false);
-        this.router.navigateByUrl('courses');
-      },
-      err => console.log(err.message)
-    );
+    this.store.dispatch(new UpdateCourse(this.course));
   }
 }

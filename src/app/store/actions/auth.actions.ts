@@ -3,13 +3,13 @@ import { Action } from '@ngrx/store';
 import { IAuth, IUser } from 'src/app/entities/auth.model';
 
 export const AuthActionType = {
-    LOGIN: '[Auth] Login',
-    GET_USER_DATA: '[Auth] Get user data',
-    LOGIN_SUCCESS: '[Auth] Login success',
+    LOGIN: '[Auth] Logging ing',
+    GET_USER_DATA: '[Auth] Getting user data',
+    LOGIN_SUCCESS: '[Auth] Logging in succeed',
     LOGIN_FAIL: '[Auth] Login failed',
-    LOGOUT: '[Auth] Logout',
-    LOGOUT_SUCCESS: '[Auth] Logout success',
-    LOGOUT_FAIL: '[Auth] Logout failed'
+    LOGOUT: '[Auth] Logging out',
+    LOGOUT_SUCCESS: '[Auth] Logging out succeed',
+    LOGOUT_FAIL: '[Auth] Logging out failed'
 };
 
 export class Login implements Action {
@@ -26,7 +26,7 @@ export class LoginSuccess implements Action {
     constructor(public payload: IUser) { }
 }
 
-export class LoginFailed implements Action {
+export class LoginFail implements Action {
     readonly type = AuthActionType.LOGIN_FAIL;
     constructor(public payload: Error) { }
 }
@@ -39,9 +39,7 @@ export class LogoutSuccess implements Action {
     readonly type = AuthActionType.LOGOUT_SUCCESS;
 }
 
-export class LogoutFailed implements Action {
+export class LogoutFail implements Action {
     readonly type = AuthActionType.LOGOUT_FAIL;
     constructor(public payload: Error) { }
 }
-
-// export type AuthAction = Login | GetUserData | LoginSuccess | LoginFailed | Logout | LogoutSuccess | LogoutFailed;

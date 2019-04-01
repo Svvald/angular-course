@@ -1,23 +1,23 @@
-<app-breadcrumbs [courseName]="this.title"></app-breadcrumbs>
+<app-breadcrumbs [courseName]="course?.name"></app-breadcrumbs>
 <div class="course-data__container">
   <label>Title</label>
-  <input class="mb-16" type="text" [(ngModel)]="name">
-
+  <input class="mb-16" type="text" [(ngModel)]="course.name">
+  
   <label>Description</label>
-  <textarea class="course-data__description mb-16" [(ngModel)]="description"></textarea>
-
+  <textarea class="course-data__description mb-16" [(ngModel)]="course.description"></textarea>
+  
   <label>Date</label>
-  <input class="mb-16" type="date" [(ngModel)]="date">
-
+  <input class="mb-16" type="date" [(ngModel)]="course.date">
+  
   <label>Duration</label>
   <div class="course-data__duration-group mb-16">
-    <input class="mr-16" type="number" min="0" [(ngModel)]="length">
-    <span><b>{{ length | duration }}</b></span>
+    <input class="mr-16" type="number" min="0" [(ngModel)]="course.length">
+    <span><b>{{ course?.length | duration }}</b></span>
   </div>
-
+  
   <label>Authors</label>
   <input class="mb-16" type="text">
-
+  
   <div class="course-data__buttons">
     <button class="btn btn-primary mr-16" (click)="onSave()">Save</button>
     <button class="btn btn-outline" (click)="onCancel()">Cancel</button>

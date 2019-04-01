@@ -5,7 +5,7 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 
-import { AuthActionType, LoginSuccess, LoginFailed, LogoutSuccess, LogoutFailed, GetUserData, Login } from '../actions/auth.actions';
+import { AuthActionType, LoginSuccess, LoginFail, LogoutSuccess, LogoutFail, GetUserData, Login } from '../actions/auth.actions';
 import { AuthService } from '../../services/auth-service/auth.service';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AuthEffects {
             tap(token => localStorage.setItem('token', token)),
         )),
         map(_ => new GetUserData()),
-        catchError(err => of(new LoginFailed(err)))
+        catchError(err => of(new LoginFail(err)))
     );
 
     @Effect() getUserData$: Observable<Action> = this.actions$.pipe(
@@ -33,7 +33,7 @@ export class AuthEffects {
     );
 
     @Effect({ dispatch: false }) loginFailed$: Observable<Error> = this.actions$.pipe(
-        ofType<LoginFailed>(AuthActionType.LOGIN_FAIL),
+        ofType<LoginFail>(AuthActionType.LOGIN_FAIL),
         map(action => action.payload),
         tap(err => console.error(err))
     );
@@ -42,7 +42,7 @@ export class AuthEffects {
         ofType(AuthActionType.LOGOUT),
         tap(_ => localStorage.clear()),
         map(_ => new LogoutSuccess()),
-        catchError(err => of(new LogoutFailed(err)))
+        catchError(err => of(new LogoutFail(err)))
     );
 
     @Effect({ dispatch: false }) logoutSuccess$: Observable<Action> = this.actions$.pipe(
@@ -51,7 +51,7 @@ export class AuthEffects {
     );
 
     @Effect({ dispatch: false }) logoutFailed$: Observable<Error> = this.actions$.pipe(
-        ofType<LogoutFailed>(AuthActionType.LOGOUT_FAIL),
+        ofType<LogoutFail>(AuthActionType.LOGOUT_FAIL),
         map(action => action.payload),
         tap(err => console.error(err))
     );

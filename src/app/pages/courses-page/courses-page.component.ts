@@ -1,18 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { concat, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { concat, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Course } from '../../entities/course.model';
-
 import { CoursesService } from '../../services/courses-service/courses.service';
 import { LoaderService } from 'src/app/common/loader/service/loader.service';
-
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
-
-import { GetCourses } from '../../store/actions/courses.actions';
+import { GetCourses, EditCourse } from '../../store/actions/courses.actions';
 import { CoursesState } from '../../store/reducers/courses.reducer';
 
 @Component({
@@ -20,7 +17,7 @@ import { CoursesState } from '../../store/reducers/courses.reducer';
   templateUrl: './courses-page.component.html',
   styleUrls: ['./courses-page.component.css'],
 })
-export class CoursesPageComponent implements OnInit, OnDestroy {
+export class CoursesPageComponent implements OnInit {
   public courses: Course[] = [];
   public showModal: boolean;
 
@@ -30,7 +27,7 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   private readonly ORDER_BY_DATE = 'date';
   private readonly COUNT_INC = 5;
 
-  private unsubscribe$ = new Subject();
+  public courses$: Observable<Course[]>;
 
   constructor(
     private orderByPipe: OrderByPipe,
@@ -39,19 +36,14 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private router: Router,
     private store: Store<CoursesState>
-  ) { }
-
-  ngOnInit() {
-    this.store.dispatch(new GetCourses(this.count));
-    this.store.select('courses').pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe(courses =>
-      this.courses = courses.coursesList
+  ) {
+    this.courses$ = this.store.select('courses').pipe(
+      map(courses => courses.coursesList)
     );
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
+  ngOnInit() {
+    this.store.dispatch(new GetCourses(this.count));
   }
 
   onLoadMore() {
@@ -102,6 +94,6 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   }
 
   onEditCourse(id: number) {
-    this.router.navigateByUrl(`courses/${id}`);
+    this.store.dispatch(new EditCourse(id));
   }
 }
