@@ -56,34 +56,21 @@ body {
   background-color: #877cd0;
 }
 
-input {
+input, textarea {
   border: 1px solid #d0d0e9;
   border-radius: 4px;
   padding: 8px 16px;
-  color: #d0d0e9;
+  color: #79769c;
   background-color: rgba(0, 0, 0, 0);
 }
 
-input:focus {
-  border-color: #877cd0;
-  color: #221b9c;
-}
-
-textarea {
-  border: 1px solid #d0d0e9;
-  border-radius: 4px;
-  padding: 8px 16px;
-  color: #d0d0e9;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-textarea:focus {
+input:focus, textarea:focus {
   border-color: #877cd0;
   color: #221b9c;
 }
 
 label {
-  font-size: 12px;
+  font-size: 16px;
   color: #221b9c;
 }
 
