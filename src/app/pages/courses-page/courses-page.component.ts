@@ -9,7 +9,7 @@ import { CoursesService } from '../../services/courses-service/courses.service';
 import { LoaderService } from 'src/app/common/loader/service/loader.service';
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
-import { GetCourses, EditCourse } from '../../store/actions/courses.actions';
+import { GetCourses, EditCourse, DeleteCourse } from '../../store/actions/courses.actions';
 import { CoursesState } from '../../store/reducers/courses.reducer';
 
 @Component({
@@ -36,14 +36,13 @@ export class CoursesPageComponent implements OnInit {
     private loaderService: LoaderService,
     private router: Router,
     private store: Store<CoursesState>
-  ) {
-    this.courses$ = this.store.select('courses').pipe(
-      map(courses => courses.coursesList)
-    );
-  }
+  ) { }
 
   ngOnInit() {
     this.store.dispatch(new GetCourses(this.count));
+    this.courses$ = this.store.select('courses').pipe(
+      map(courses => courses.coursesList)
+    );
   }
 
   onLoadMore() {
@@ -61,17 +60,8 @@ export class CoursesPageComponent implements OnInit {
   // TODO: Implement toast on delete success and fail
   onDeleteConfirm() {
     this.showModal = false;
-    this.loaderService.toggle(true);
-    concat(
-      this.coursesService.deleteCourse(this.deletingCourseID),
-      this.coursesService.getCourses(this.count)
-    ).subscribe(
-      res => {
-        this.courses = res as Course[];
-        this.loaderService.toggle(false);
-      },
-      err => console.error(err.message)
-    );
+    this.store.dispatch(new DeleteCourse(this.deletingCourseID));
+    this.store.dispatch(new GetCourses(this.count));
   }
 
   onDeleteCancel() {

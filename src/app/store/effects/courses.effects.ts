@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
+import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
-import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail } from '../actions/courses.actions';
+import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail } from '../actions/courses.actions';
 import { LoaderService } from '../../common/loader/service/loader.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class CoursesEffects {
@@ -76,6 +76,26 @@ export class CoursesEffects {
     // TODO: Merge all fail effects using action types union
     @Effect({ dispatch: false }) updateCourseFail$: Observable<Error> = this.actions$.pipe(
         ofType<UpdateCourseFail>(CoursesActionType.UPDATE_COURSE_FAIL),
+        map(action => action.payload),
+        tap(err => console.error(err))
+    );
+
+    @Effect() deleteCourse$: Observable<Action> = this.actions$.pipe(
+        ofType<DeleteCourse>(CoursesActionType.DELETE_COURSE),
+        tap(_ => this.loaderService.toggle(true)),
+        switchMap(action => this.coursesService.deleteCourse(action.payload).pipe(
+            map(_ => new DeleteCourseSuccess())
+        )),
+        catchError(err => of (new DeleteCourseFail(err)))
+    );
+
+    @Effect({ dispatch: false }) deleteCourseSuccess$: Observable<Action> = this.actions$.pipe(
+        ofType(CoursesActionType.DELETE_COURSE_SUCCESS),
+        tap(_ => this.loaderService.toggle(false)),
+    );
+
+    @Effect({ dispatch: false }) deleteCourseFail$: Observable<Error> = this.actions$.pipe(
+        ofType<DeleteCourseFail>(CoursesActionType.DELETE_COURSE_FAIL),
         map(action => action.payload),
         tap(err => console.error(err))
     );
