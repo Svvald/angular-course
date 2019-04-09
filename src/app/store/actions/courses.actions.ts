@@ -16,6 +16,9 @@ export const CoursesActionType = {
     DELETE_COURSE: '[Courses] Deleting course',
     DELETE_COURSE_SUCCESS: '[Courses] Deleting course succeed',
     DELETE_COURSE_FAIL: '[Courses] Deleting course failed',
+    ADD_COURSE: '[Courses] Adding course',
+    ADD_COURSE_SUCCESS: '[Courses] Adding course succeed',
+    ADD_COURSE_FAIL: '[Courses] Adding course failed',
 };
 
 export class GetCourses implements Action {
@@ -81,5 +84,19 @@ export class DeleteCourseFail implements Action {
     constructor(public payload: Error) { }
 }
 
+export class AddCourse implements Action {
+    readonly type = CoursesActionType.ADD_COURSE;
+    constructor(public payload: Course) { }
+}
 
-export type CourseActionFail = GetCoursesFail | GetCourseFail | UpdateCourseFail | DeleteCourseFail;
+export class AddCourseSuccess implements Action {
+    readonly type = CoursesActionType.ADD_COURSE_SUCCESS;
+}
+
+export class AddCourseFailed implements Action {
+    readonly type = CoursesActionType.ADD_COURSE_FAIL;
+    constructor(public payload: Error) { }
+}
+
+
+export type CourseActionFail = GetCoursesFail | GetCourseFail | UpdateCourseFail | DeleteCourseFail | AddCourseFailed;

@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Course } from '../../entities/course.model';
-import { CoursesService } from '../../services/courses-service/courses.service';
-import { LoaderService } from '../../common/loader/service/loader.service';
 import { ApplicationState } from '../../store/states';
-import { UpdateCourse } from '../../store/actions/courses.actions';
+import { UpdateCourse, AddCourse } from '../../store/actions/courses.actions';
 
 @Component({
   selector: 'app-single-course-page',
@@ -16,12 +14,6 @@ import { UpdateCourse } from '../../store/actions/courses.actions';
   styleUrls: ['./single-course-page.component.css']
 })
 export class SingleCoursePageComponent implements OnInit, OnDestroy {
-  public id?: number;
-  public name: string;
-  public description: string;
-  public date: Date;
-  public length = 0;
-
   public course: Course = {
     id: 0,
     date: new Date(0),
@@ -35,8 +27,6 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private coursesService: CoursesService,
-    private loaderService: LoaderService,
     private store: Store<ApplicationState>
   ) { }
 
@@ -70,14 +60,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   // TODO: Implement toast on create/update success and fail
   saveNewCourse() {
-    this.loaderService.toggle(true);
-    this.coursesService.createCourse(this.course).subscribe(
-      res => {
-        this.loaderService.toggle(false);
-        this.router.navigateByUrl('courses');
-      },
-      err => console.log(err.message)
-    );
+    this.store.dispatch(new AddCourse(this.course));
   }
 
   saveExistingCourse() {

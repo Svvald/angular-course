@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
-import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail } from '../actions/courses.actions';
+import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail, AddCourse, AddCourseSuccess, AddCourseFailed } from '../actions/courses.actions';
 import { LoaderService } from '../../common/loader/service/loader.service';
 
 @Injectable()
@@ -96,6 +96,27 @@ export class CoursesEffects {
 
     @Effect({ dispatch: false }) deleteCourseFail$: Observable<Error> = this.actions$.pipe(
         ofType<DeleteCourseFail>(CoursesActionType.DELETE_COURSE_FAIL),
+        map(action => action.payload),
+        tap(err => console.error(err))
+    );
+
+    @Effect() addCourse$: Observable<Action> = this.actions$.pipe(
+        ofType<AddCourse>(CoursesActionType.ADD_COURSE),
+        tap(_ => this.loaderService.toggle(true)),
+        switchMap(action => this.coursesService.createCourse(action.payload).pipe(
+            map(_ => new AddCourseSuccess())
+        )),
+        catchError(err => of (new AddCourseFailed(err)))
+    );
+
+    @Effect({ dispatch: false }) addCourseSuccess$: Observable<Action> = this.actions$.pipe(
+        ofType(CoursesActionType.ADD_COURSE_SUCCESS),
+        tap(_ => this.loaderService.toggle(false)),
+        tap(_ => this.router.navigateByUrl('courses'))
+    );
+
+    @Effect({ dispatch: false }) addCourseFail$: Observable<Error> = this.actions$.pipe(
+        ofType<AddCourseFailed>(CoursesActionType.ADD_COURSE_FAIL),
         map(action => action.payload),
         tap(err => console.error(err))
     );
