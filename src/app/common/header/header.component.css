@@ -31,4 +31,5 @@ a.header__logo {
 .header__username {
   margin-right: 16px;
   font-weight: bold;
+  color: #221b9c;
 }

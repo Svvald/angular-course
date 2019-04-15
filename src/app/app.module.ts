@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -40,15 +41,12 @@ import { CoursesEffects } from './store/effects/courses.effects';
 @NgModule({
   declarations: [
     AppComponent,
-
     BreadcrumbsComponent,
     HeaderComponent,
     FooterComponent,
-
     CoursesControlsComponent,
     CourseHighlightDirective,
     CourseItemComponent,
-
     CoursesPageComponent,
     LoginPageComponent,
     SingleCoursePageComponent,
@@ -59,6 +57,7 @@ import { CoursesEffects } from './store/effects/courses.effects';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     PipesModule,
     FontAwesomeModule,
     RouterModule.forRoot(ROUTES),

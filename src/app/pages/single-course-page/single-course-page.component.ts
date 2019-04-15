@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,6 +24,9 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
     name: ''
   };
 
+  public courseForm: FormGroup;
+  // public name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+
   private unsubscribe$ = new Subject();
 
   constructor(
@@ -34,14 +38,24 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
     if (this.isEditing()) {
       this.store.select('courses').pipe(
         takeUntil(this.unsubscribe$)
-      ).subscribe(courses =>
-        this.course = courses.selectedCourse
-      );
+      ).subscribe(courses => {
+        const course = courses.selectedCourse;
+        this.courseForm = new FormGroup({
+          name: new FormControl(course.name, [Validators.required, Validators.maxLength(50)]),
+          description: new FormControl(course.description, [Validators.required, Validators.maxLength(500)]),
+        });
+        // this.courseForm.get
+        // this.name.setValue(course.name);
+      });
     }
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
+  }
+
+  onChange(event) {
+    console.log(this.courseForm.get('name').errors)
   }
 
   private isEditing(): boolean {

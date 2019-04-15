@@ -21,6 +21,11 @@ body {
   cursor: pointer;
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
 .btn-round {
   padding: 3px 6px;
   border-radius: 50%;
@@ -32,11 +37,11 @@ body {
   color: white;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background: #d798c3;
 }
 
-.btn-primary:active {
+.btn-primary:active:not(:disabled) {
   background-color: #bd84ab;
 }
 
@@ -108,4 +113,12 @@ label {
 
 .ml-16 {
   margin-left: 16px;
+}
+
+input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+  border-color: #e10000;
+}
+
+.error > label, .error > span {
+  color: #e10000;
 }
