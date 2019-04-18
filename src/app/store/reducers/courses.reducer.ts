@@ -30,6 +30,11 @@ export function coursesReducer(state = initialState, action: any) {
                 ...state,
                 selectedCourse: action.payload
             };
+        case CoursesActionType.SEARCH_COURSES_SUCCESS:
+            return {
+                ...state,
+                coursesList: action.payload
+            };
         default:
             return state;
     }

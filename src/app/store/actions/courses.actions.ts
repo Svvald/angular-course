@@ -19,6 +19,9 @@ export const CoursesActionType = {
     ADD_COURSE: '[Courses] Adding course',
     ADD_COURSE_SUCCESS: '[Courses] Adding course succeed',
     ADD_COURSE_FAIL: '[Courses] Adding course failed',
+    SEARCH_COURSES: '[Courses] Search courses',
+    SEARCH_COURSES_SUCCESS: '[Courses] Search courses succeed',
+    SEARCH_COURSES_FAIL: '[Courses] Search courses failed',
 };
 
 export class GetCourses implements Action {
@@ -93,10 +96,24 @@ export class AddCourseSuccess implements Action {
     readonly type = CoursesActionType.ADD_COURSE_SUCCESS;
 }
 
-export class AddCourseFailed implements Action {
+export class AddCourseFail implements Action {
     readonly type = CoursesActionType.ADD_COURSE_FAIL;
     constructor(public payload: Error) { }
 }
 
+export class SearchCourses implements Action {
+    readonly type = CoursesActionType.SEARCH_COURSES;
+    constructor(public payload: string) { }
+}
 
-export type CourseActionFail = GetCoursesFail | GetCourseFail | UpdateCourseFail | DeleteCourseFail | AddCourseFailed;
+export class SearchCoursesSuccess implements Action {
+    readonly type = CoursesActionType.SEARCH_COURSES_SUCCESS;
+    constructor(public payload: Course[]) { }
+}
+
+export class SearchCoursesFail implements Action {
+    readonly type = CoursesActionType.SEARCH_COURSES_FAIL;
+    constructor(public payload: Error) { }
+}
+
+export type CourseActionFail = GetCoursesFail | GetCourseFail | UpdateCourseFail | DeleteCourseFail | AddCourseFail;

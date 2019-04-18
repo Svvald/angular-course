@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { concat, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Course } from '../../entities/course.model';
-import { CoursesService } from '../../services/courses-service/courses.service';
-import { LoaderService } from 'src/app/common/loader/service/loader.service';
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
-import { GetCourses, EditCourse, DeleteCourse } from '../../store/actions/courses.actions';
+import { GetCourses, EditCourse, DeleteCourse, SearchCourses } from '../../store/actions/courses.actions';
 import { CoursesState } from '../../store/reducers/courses.reducer';
 
 @Component({
@@ -22,6 +20,8 @@ export class CoursesPageComponent implements OnInit {
   public showModal: boolean;
 
   private deletingCourseID: number;
+
+  // TODO: Maybe move it to store and use in effects
   private count = 5;
 
   private readonly ORDER_BY_DATE = 'date';
@@ -31,9 +31,6 @@ export class CoursesPageComponent implements OnInit {
 
   constructor(
     private orderByPipe: OrderByPipe,
-    private filterPipe: FilterPipe,
-    private coursesService: CoursesService,
-    private loaderService: LoaderService,
     private router: Router,
     private store: Store<CoursesState>
   ) { }
@@ -69,14 +66,7 @@ export class CoursesPageComponent implements OnInit {
   }
 
   onCourseSearch(name: string) {
-    this.loaderService.toggle(true);
-    this.coursesService.searchCourses(name).subscribe(
-      res => {
-        this.courses = res;
-        this.loaderService.toggle(false);
-      },
-      err => console.error(err.message)
-    );
+    this.store.dispatch(new SearchCourses(name));
   }
 
   onAddCourse() {

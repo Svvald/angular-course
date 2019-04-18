@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
-import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail, AddCourse, AddCourseSuccess, AddCourseFailed } from '../actions/courses.actions';
+import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail, AddCourse, AddCourseSuccess, AddCourseFail, SearchCourses, SearchCoursesSuccess, SearchCoursesFail } from '../actions/courses.actions';
 import { LoaderService } from '../../common/loader/service/loader.service';
 
 @Injectable()
@@ -86,7 +86,7 @@ export class CoursesEffects {
         switchMap(action => this.coursesService.deleteCourse(action.payload).pipe(
             map(_ => new DeleteCourseSuccess())
         )),
-        catchError(err => of (new DeleteCourseFail(err)))
+        catchError(err => of(new DeleteCourseFail(err)))
     );
 
     @Effect({ dispatch: false }) deleteCourseSuccess$: Observable<Action> = this.actions$.pipe(
@@ -106,7 +106,7 @@ export class CoursesEffects {
         switchMap(action => this.coursesService.createCourse(action.payload).pipe(
             map(_ => new AddCourseSuccess())
         )),
-        catchError(err => of (new AddCourseFailed(err)))
+        catchError(err => of(new AddCourseFail(err)))
     );
 
     @Effect({ dispatch: false }) addCourseSuccess$: Observable<Action> = this.actions$.pipe(
@@ -116,9 +116,29 @@ export class CoursesEffects {
     );
 
     @Effect({ dispatch: false }) addCourseFail$: Observable<Error> = this.actions$.pipe(
-        ofType<AddCourseFailed>(CoursesActionType.ADD_COURSE_FAIL),
+        ofType<AddCourseFail>(CoursesActionType.ADD_COURSE_FAIL),
         map(action => action.payload),
         tap(err => console.error(err))
+    );
+
+    @Effect() searchCourses$: Observable<Action> = this.actions$.pipe(
+        ofType<SearchCourses>(CoursesActionType.SEARCH_COURSES),
+        tap(_ => this.loaderService.toggle(true)),
+        switchMap(action => this.coursesService.searchCourses(action.payload).pipe(
+            map(courses => new SearchCoursesSuccess(courses))
+        )),
+        catchError(err => of(new SearchCoursesFail(err)))
+    );
+
+    @Effect({ dispatch: false }) searchCoursesFail$: Observable<Error> = this.actions$.pipe(
+        ofType<SearchCoursesFail>(CoursesActionType.SEARCH_COURSES_FAIL),
+        map(action => action.payload),
+        tap(err => console.error(err))
+    );
+
+    @Effect({ dispatch: false }) searchCoursesSuccess$: Observable<Action> = this.actions$.pipe(
+        ofType(CoursesActionType.SEARCH_COURSES_SUCCESS),
+        tap(_ => this.loaderService.toggle(false))
     );
 
     constructor(
