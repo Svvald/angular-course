@@ -15,17 +15,8 @@ import { UpdateCourse, AddCourse } from '../../store/actions/courses.actions';
   styleUrls: ['./single-course-page.component.css']
 })
 export class SingleCoursePageComponent implements OnInit, OnDestroy {
-  public course: Course = {
-    id: 0,
-    date: new Date(0),
-    description: '',
-    isTopRated: false,
-    length: 0,
-    name: ''
-  };
-
+  public course: Course;
   public courseForm: FormGroup;
-  // public name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
 
   private unsubscribe$ = new Subject();
 
@@ -35,27 +26,35 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.courseForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
+    });
+
     if (this.isEditing()) {
       this.store.select('courses').pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(courses => {
-        const course = courses.selectedCourse;
-        this.courseForm = new FormGroup({
-          name: new FormControl(course.name, [Validators.required, Validators.maxLength(50)]),
-          description: new FormControl(course.description, [Validators.required, Validators.maxLength(500)]),
+        this.course = courses.selectedCourse;
+        this.courseForm.setValue({
+          name: this.course.name,
+          description: this.course.description
         });
-        // this.courseForm.get
-        // this.name.setValue(course.name);
       });
+    } else {
+      this.course = {
+        id: 0,
+        date: new Date(0),
+        description: '',
+        isTopRated: false,
+        length: 0,
+        name: ''
+      };
     }
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
-  }
-
-  onChange(event) {
-    console.log(this.courseForm.get('name').errors)
   }
 
   private isEditing(): boolean {
@@ -79,5 +78,20 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   saveExistingCourse() {
     this.store.dispatch(new UpdateCourse(this.course));
+  }
+
+  hasErrors(controlName: string): boolean {
+    const control = this.courseForm.get(controlName);
+    return control.dirty && control.invalid;
+  }
+
+  requiredFailed(controlName: string): boolean {
+    const control = this.courseForm.get(controlName);
+    return control.dirty && control.hasError('required');
+  }
+
+  maxLengthFailed(controlName: string): boolean {
+    const control = this.courseForm.get(controlName);
+    return control.hasError('maxlength');
   }
 }

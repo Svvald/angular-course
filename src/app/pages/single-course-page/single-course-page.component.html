@@ -1,17 +1,17 @@
 <app-breadcrumbs [courseName]="course?.name"></app-breadcrumbs>
 <form class="course-data__container" [formGroup]="courseForm">
-  <div [ngClass]="{'error': courseForm.get('name').invalid }">
+  <div [ngClass]="{'error': hasErrors('name') }">
     <label>Title</label>
-    <span class="ml-16" *ngIf="courseForm.get('name').hasError('required') && courseForm.get('name').touched">This field is required</span>
-    <span class="ml-16" *ngIf="courseForm.get('name').hasError('maxlength')">Field exceeded maximum length of 50 characters</span>
+    <span class="ml-16" *ngIf="requiredFailed('name')">This field is required</span>
+    <span class="ml-16" *ngIf="maxLengthFailed('name')">Field exceeded maximum length of 50 characters</span>
   </div>
-  <input class="mb-16" type="text" formControlName="name" (change)="onChange($event)">
+  <input class="mb-16" type="text" formControlName="name">
   
-  <div [ngClass]="{'error': courseForm.get('description').invalid }">
-      <label>Description</label>
-      <span class="ml-16" *ngIf="courseForm.get('description').hasError('required') && courseForm.get('description').touched">This field is required</span>
-      <span class="ml-16" *ngIf="courseForm.get('description').hasError('maxlength')">Field exceeded maximum length of 500 characters</span>
-    </div>
+  <div [ngClass]="{'error': hasErrors('description') }">
+    <label>Description</label>
+    <span class="ml-16" *ngIf="requiredFailed('description')">This field is required</span>
+    <span class="ml-16" *ngIf="maxLengthFailed('description')">Field exceeded maximum length of 500 characters</span>
+  </div>
   <textarea class="course-data__description mb-16" formControlName="description"></textarea>
   
   <label>Date</label>
