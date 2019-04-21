@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { LoaderService } from '../service/loader.service';
+import { LoaderService } from '../../services/loader-service/loader.service';
 
 @Component({
   selector: 'app-loader',

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Effect, Actions, ofType } from '@ngrx/effects';
@@ -7,7 +7,7 @@ import { switchMap, map, catchError, tap } from 'rxjs/operators';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
 import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail, AddCourse, AddCourseSuccess, AddCourseFail, SearchCourses, SearchCoursesSuccess, SearchCoursesFail } from '../actions/courses.actions';
-import { LoaderService } from '../../common/loader/service/loader.service';
+import { LoaderService } from '../../services/loader-service/loader.service';
 
 @Injectable()
 export class CoursesEffects {
