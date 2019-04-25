@@ -115,10 +115,11 @@ label {
   margin-left: 16px;
 }
 
-input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+.ng-dirty.ng-invalid {
   border-color: #e10000;
 }
 
-.error > label, .error > span {
+.error > label,
+.error > span {
   color: #e10000;
 }

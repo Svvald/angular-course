@@ -9,6 +9,7 @@ import { CoursesControlsComponent } from './courses-controls/courses-controls.co
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
+import { CourseDurationInputComponent } from './form-controls/course-duration-input/course-duration-input.component';
 
 import { DirectivesModule } from '../directives/directives.module';
 import { PipesModule } from '../pipes/pipes.module';
@@ -21,6 +22,7 @@ import { PipesModule } from '../pipes/pipes.module';
         FooterComponent,
         HeaderComponent,
         LoaderComponent,
+        CourseDurationInputComponent,
     ],
     imports: [
         CommonModule,
@@ -36,6 +38,7 @@ import { PipesModule } from '../pipes/pipes.module';
         FooterComponent,
         HeaderComponent,
         LoaderComponent,
+        CourseDurationInputComponent
     ],
     providers: [],
 })

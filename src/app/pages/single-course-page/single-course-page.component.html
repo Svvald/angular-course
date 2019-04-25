@@ -1,13 +1,13 @@
 <app-breadcrumbs [courseName]="course?.name"></app-breadcrumbs>
 <form class="course-data__container" [formGroup]="courseForm">
-  <div [ngClass]="{'error': hasErrors('name') }">
+  <div [ngClass]="{ 'error': hasErrors('name') }">
     <label>Title</label>
     <span class="ml-16" *ngIf="requiredFailed('name')">This field is required</span>
     <span class="ml-16" *ngIf="maxLengthFailed('name')">Field exceeded maximum length of 50 characters</span>
   </div>
   <input class="mb-16" type="text" formControlName="name">
   
-  <div [ngClass]="{'error': hasErrors('description') }">
+  <div [ngClass]="{ 'error': hasErrors('description') }">
     <label>Description</label>
     <span class="ml-16" *ngIf="requiredFailed('description')">This field is required</span>
     <span class="ml-16" *ngIf="maxLengthFailed('description')">Field exceeded maximum length of 500 characters</span>
@@ -17,10 +17,14 @@
   <label>Date</label>
   <input class="mb-16" type="date">
   
-  <label>Duration</label>
+  <div [ngClass]="{ 'error': hasErrors('length') }">
+    <label>Duration</label>
+    <span class="ml-16" *ngIf="requiredFailed('length')">This field is required</span>
+    <span class="ml-16" *ngIf="positiveIntFailed('length')">This field must contain a positive integer</span>
+  </div>
   <div class="course-data__duration-group mb-16">
-    <input class="mr-16" type="number" min="0">
-    <span><b>{{ course?.length | duration }}</b></span>
+    <app-course-duration-input [formControl]="courseForm.get('length')" [hasError]="hasErrors('length')"></app-course-duration-input>
+    <span class="ml-16"><b>{{ courseForm.get('length').value | duration }}</b></span>
   </div>
   
   <label>Authors</label>

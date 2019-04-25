@@ -29,6 +29,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
     this.courseForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
+      length: new FormControl(0, [Validators.required]),
     });
 
     if (this.isEditing()) {
@@ -38,7 +39,8 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
         this.course = courses.selectedCourse;
         this.courseForm.setValue({
           name: this.course.name,
-          description: this.course.description
+          description: this.course.description,
+          length: this.course.length
         });
       });
     } else {
@@ -59,6 +61,10 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   private isEditing(): boolean {
     return !this.router.url.includes('new');
+  }
+
+  outError(c: FormControl) {
+    console.log(c.errors);
   }
 
   onCancel() {
@@ -92,6 +98,11 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   maxLengthFailed(controlName: string): boolean {
     const control = this.courseForm.get(controlName);
-    return control.hasError('maxlength');
+    return control.dirty && control.hasError('maxlength');
+  }
+
+  positiveIntFailed(controlName: string): boolean {
+    const control = this.courseForm.get(controlName);
+    return control.dirty && control.hasError('positiveInt');
   }
 }
