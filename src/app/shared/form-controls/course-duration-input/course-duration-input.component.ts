@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, FormControl, NG_VALIDATORS } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, FormControl, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-course-duration-input',
@@ -46,7 +46,7 @@ export class CourseDurationInputComponent implements ControlValueAccessor, Valid
 
   registerOnTouched(fn: any): void { }
 
-  validate(c: FormControl) {
+  validate(c: FormControl): ValidationErrors {
     return this.VALIDATION_REGEX.test(c.value) ? null : {
       positiveInt: true
     };

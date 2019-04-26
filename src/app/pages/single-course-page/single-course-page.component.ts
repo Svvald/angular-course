@@ -30,6 +30,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
       length: new FormControl(0, [Validators.required]),
+      date: new FormControl(this.dateToString(new Date(0)), [Validators.required]),
     });
 
     if (this.isEditing()) {
@@ -40,7 +41,8 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
         this.courseForm.setValue({
           name: this.course.name,
           description: this.course.description,
-          length: this.course.length
+          length: this.course.length,
+          date: this.dateToString(this.course.date),
         });
       });
     } else {
@@ -86,6 +88,28 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
     this.store.dispatch(new UpdateCourse(this.course));
   }
 
+  dateToString(date: Date): string {
+    date = new Date(date);
+
+    let dayStr, monthStr, yearStr;
+
+    const day = date.getDate();
+    dayStr = day < 10 ? `0${day}` : `${day}`;
+
+    const month = date.getMonth();
+    monthStr = month < 10 ? `0${month + 1}` : `${month + 1}`;
+
+    const year = date.getFullYear();
+    yearStr = year.toString();
+
+    return `${dayStr}/${monthStr}/${yearStr}`;
+  }
+
+  // stringToDate(dateString: string): Date {
+  //   const dateParts = dateString.split('/');
+  //   return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+  // }
+
   hasErrors(controlName: string): boolean {
     const control = this.courseForm.get(controlName);
     return control.dirty && control.invalid;
@@ -104,5 +128,10 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
   positiveIntFailed(controlName: string): boolean {
     const control = this.courseForm.get(controlName);
     return control.dirty && control.hasError('positiveInt');
+  }
+
+  dateFormatFailed(controlName: string): boolean {
+    const control = this.courseForm.get(controlName);
+    return control.dirty && control.hasError('dateFormat');
   }
 }
