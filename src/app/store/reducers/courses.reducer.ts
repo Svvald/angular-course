@@ -14,7 +14,8 @@ const initialState: CoursesState = {
         description: '',
         isTopRated: false,
         length: 0,
-        name: ''
+        name: '',
+        authors: []
     }
 };
 

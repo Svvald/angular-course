@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Course } from '../../entities/course.model';
 import { ApplicationState } from '../../store/states';
 import { UpdateCourse, AddCourse } from '../../store/actions/courses.actions';
+import { IAuthor } from 'src/app/entities/author.model';
 
 @Component({
   selector: 'app-single-course-page',
@@ -17,6 +18,7 @@ import { UpdateCourse, AddCourse } from '../../store/actions/courses.actions';
 export class SingleCoursePageComponent implements OnInit, OnDestroy {
   public course: Course;
   public courseForm: FormGroup;
+  public availableAuthors: IAuthor[];
 
   private unsubscribe$ = new Subject();
 
@@ -31,6 +33,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
       description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
       length: new FormControl(0, [Validators.required]),
       date: new FormControl(this.dateToString(new Date(0)), [Validators.required]),
+      authors: new FormControl([]),
     });
 
     if (this.isEditing()) {
@@ -43,6 +46,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
           description: this.course.description,
           length: this.course.length,
           date: this.dateToString(this.course.date),
+          authors: this.course.authors,
         });
       });
     } else {
@@ -52,7 +56,8 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
         description: '',
         isTopRated: false,
         length: 0,
-        name: ''
+        name: '',
+        authors: []
       };
     }
   }
@@ -81,11 +86,29 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   // TODO: Implement toast on create/update success and fail
   saveNewCourse() {
-    this.store.dispatch(new AddCourse(this.course));
+    const newCourse = {
+      ...this.course,
+      name: this.courseForm.get('name').value,
+      description: this.courseForm.get('description').value,
+      length: this.courseForm.get('length').value,
+      date: this.stringToDate(this.courseForm.get('date').value),
+      authors: this.courseForm.get('authors').value,
+    };
+
+    this.store.dispatch(new AddCourse(newCourse));
   }
 
   saveExistingCourse() {
-    this.store.dispatch(new UpdateCourse(this.course));
+    const updatedCourse = {
+      ...this.course,
+      name: this.courseForm.get('name').value,
+      description: this.courseForm.get('description').value,
+      length: this.courseForm.get('length').value,
+      date: this.stringToDate(this.courseForm.get('date').value),
+      authors: this.courseForm.get('authors').value,
+    };
+
+    this.store.dispatch(new UpdateCourse(updatedCourse));
   }
 
   dateToString(date: Date): string {
@@ -105,10 +128,15 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
     return `${dayStr}/${monthStr}/${yearStr}`;
   }
 
-  // stringToDate(dateString: string): Date {
-  //   const dateParts = dateString.split('/');
-  //   return new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
-  // }
+  stringToDate(dateString: string): Date {
+    const dateParts = dateString.split('/');
+
+    const day = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10) - 1;
+    const year = parseInt(dateParts[2], 10);
+
+    return new Date(year, month, day);
+  }
 
   hasErrors(controlName: string): boolean {
     const control = this.courseForm.get(controlName);
@@ -133,5 +161,10 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
   dateFormatFailed(controlName: string): boolean {
     const control = this.courseForm.get(controlName);
     return control.dirty && control.hasError('dateFormat');
+  }
+
+  emptyAuthorsFailed(controlName: string): boolean {
+    const control = this.courseForm.get(controlName);
+    return control.dirty && control.hasError('emptyAuthors');
   }
 }

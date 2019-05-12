@@ -11,6 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CourseDurationInputComponent } from './form-controls/course-duration-input/course-duration-input.component';
 import { CourseDateInputComponent } from './form-controls/course-date-input/course-date-input.component';
+import { CourseAuthorsInputComponent } from './form-controls/course-authors-input/course-authors-input.component';
 
 import { DirectivesModule } from '../directives/directives.module';
 import { PipesModule } from '../pipes/pipes.module';
@@ -25,6 +26,7 @@ import { PipesModule } from '../pipes/pipes.module';
         LoaderComponent,
         CourseDurationInputComponent,
         CourseDateInputComponent,
+        CourseAuthorsInputComponent,
     ],
     imports: [
         CommonModule,
@@ -42,6 +44,7 @@ import { PipesModule } from '../pipes/pipes.module';
         LoaderComponent,
         CourseDurationInputComponent,
         CourseDateInputComponent,
+        CourseAuthorsInputComponent,
     ],
     providers: [],
 })

@@ -19,7 +19,7 @@
     <span class="ml-16" *ngIf="requiredFailed('date')">This field is required</span>
     <span class="ml-16" *ngIf="dateFormatFailed('date')">This field must match next pattern: dd/mm/yyyy</span>
   </div>
-  <div class="course-data__duration-group mb-16">
+  <div class="mb-16">
     <app-course-date-input [formControl]="courseForm.get('date')" [hasError]="hasErrors('date')"></app-course-date-input>
   </div>
   
@@ -33,8 +33,13 @@
     <span class="ml-16"><b>{{ courseForm.get('length').value | duration }}</b></span>
   </div>
   
-  <label>Authors</label>
-  <input class="mb-16" type="text">
+  <div [ngClass]="{ 'error': hasErrors('authors') }">
+    <label>Authors</label>
+    <span class="ml-16" *ngIf="emptyAuthorsFailed('authors')">This field is required</span>
+  </div>
+  <div class="mb-16">
+    <app-course-authors-input [formControl]="courseForm.get('authors')" [hasError]="hasErrors('authors')"></app-course-authors-input>
+  </div>
   
   <div class="course-data__buttons">
     <button class="btn btn-primary mr-16" (click)="onSave()" [disabled]="courseForm.invalid">Save</button>

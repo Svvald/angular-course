@@ -1,0 +1,10 @@
+<div class="authors__container" [ngClass]="{ 'authors__container-active': isActive, 'authors__container-error': hasError }">
+  <div class="authors__tag" *ngFor="let author of data">
+    <span class="authors__name">{{ author.firstName }} {{ author.lastName }}</span>
+    <span class="authors__delete" (click)="removeAuthor(author)">⨯</span>
+  </div>
+  <input class="authors__input" (keyup)="keyUp$.next($event)" (focus)="onFocus()" (blur)="onBlur()" #tagInput>
+</div>
+<div class="authors__suggestions">
+  <div class="authors__suggestion" *ngFor="let author of authors" (click)="addAuthor(author)">{{ author.firstName }} {{ author.lastName }}</div>
+</div>

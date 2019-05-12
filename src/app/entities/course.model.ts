@@ -1,3 +1,5 @@
+import { IAuthor } from './author.model';
+
 export interface ICourse {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ export interface ICourse {
   length: number;
   description: string;
   isTopRated: boolean;
+  authors: IAuthor[];
 }
 
 export class Course implements ICourse {
@@ -14,6 +17,7 @@ export class Course implements ICourse {
   length: number;
   description: string;
   isTopRated: boolean;
+  authors: IAuthor[];
 
   constructor(data: ICourse) {
     this.id = data.id;
@@ -22,5 +26,6 @@ export class Course implements ICourse {
     this.length = data.length;
     this.description = data.description;
     this.isTopRated = data.isTopRated;
+    this.authors = data.authors;
   }
 }
