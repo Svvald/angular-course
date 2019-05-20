@@ -6,7 +6,7 @@
     height: 100%;
 }
 
-.login__container {
+.login__form {
     display: flex;
     flex-direction: column;
     padding: 64px;
@@ -15,8 +15,4 @@
 .login__title {
     margin: 0 0 16px;
     color: #221b9c;
-}
-
-.login__input {
-    margin-bottom: 16px;
 }
