@@ -86,29 +86,24 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   // TODO: Implement toast on create/update success and fail
   saveNewCourse() {
-    const newCourse = {
-      ...this.course,
-      name: this.courseForm.get('name').value,
-      description: this.courseForm.get('description').value,
-      length: this.courseForm.get('length').value,
-      date: this.stringToDate(this.courseForm.get('date').value),
-      authors: this.courseForm.get('authors').value,
-    };
-
-    this.store.dispatch(new AddCourse(newCourse));
+    const data = this.combineCourseData();
+    this.store.dispatch(new AddCourse(data));
   }
 
   saveExistingCourse() {
-    const updatedCourse = {
+    const data = this.combineCourseData();
+    this.store.dispatch(new UpdateCourse(data));
+  }
+
+  private combineCourseData(): Course {
+    return ({
       ...this.course,
       name: this.courseForm.get('name').value,
       description: this.courseForm.get('description').value,
       length: this.courseForm.get('length').value,
       date: this.stringToDate(this.courseForm.get('date').value),
       authors: this.courseForm.get('authors').value,
-    };
-
-    this.store.dispatch(new UpdateCourse(updatedCourse));
+    });
   }
 
   dateToString(date: Date): string {
@@ -143,28 +138,8 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
     return control.dirty && control.invalid;
   }
 
-  requiredFailed(controlName: string): boolean {
+  hasError(controlName: string, errorName: string) {
     const control = this.courseForm.get(controlName);
-    return control.dirty && control.hasError('required');
-  }
-
-  maxLengthFailed(controlName: string): boolean {
-    const control = this.courseForm.get(controlName);
-    return control.dirty && control.hasError('maxlength');
-  }
-
-  positiveIntFailed(controlName: string): boolean {
-    const control = this.courseForm.get(controlName);
-    return control.dirty && control.hasError('positiveInt');
-  }
-
-  dateFormatFailed(controlName: string): boolean {
-    const control = this.courseForm.get(controlName);
-    return control.dirty && control.hasError('dateFormat');
-  }
-
-  emptyAuthorsFailed(controlName: string): boolean {
-    const control = this.courseForm.get(controlName);
-    return control.dirty && control.hasError('emptyAuthors');
+    return control.dirty && control.hasError(errorName);
   }
 }

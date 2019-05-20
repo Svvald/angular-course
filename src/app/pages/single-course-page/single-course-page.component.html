@@ -2,22 +2,22 @@
 <form class="course-data__container" [formGroup]="courseForm">
   <div [ngClass]="{ 'error': hasErrors('name') }">
     <label>Title</label>
-    <span class="ml-16" *ngIf="requiredFailed('name')">This field is required</span>
-    <span class="ml-16" *ngIf="maxLengthFailed('name')">Field exceeded maximum length of 50 characters</span>
+    <span class="ml-16" *ngIf="hasError('name', 'required')">This field is required</span>
+    <span class="ml-16" *ngIf="hasError('name', 'maxlength')">Field exceeded maximum length of 50 characters</span>
   </div>
   <input class="mb-16" type="text" formControlName="name">
   
   <div [ngClass]="{ 'error': hasErrors('description') }">
     <label>Description</label>
-    <span class="ml-16" *ngIf="requiredFailed('description')">This field is required</span>
-    <span class="ml-16" *ngIf="maxLengthFailed('description')">Field exceeded maximum length of 500 characters</span>
+    <span class="ml-16" *ngIf="hasError('description', 'required')">This field is required</span>
+    <span class="ml-16" *ngIf="hasError('description', 'maxlength')">Field exceeded maximum length of 500 characters</span>
   </div>
   <textarea class="course-data__description mb-16" formControlName="description"></textarea>
   
   <div [ngClass]="{ 'error': hasErrors('date') }">
     <label>Date</label>
-    <span class="ml-16" *ngIf="requiredFailed('date')">This field is required</span>
-    <span class="ml-16" *ngIf="dateFormatFailed('date')">This field must match next pattern: dd/mm/yyyy</span>
+    <span class="ml-16" *ngIf="hasError('date', 'required')">This field is required</span>
+    <span class="ml-16" *ngIf="hasError('date', 'dateFormat')">This field must match next pattern: dd/mm/yyyy</span>
   </div>
   <div class="mb-16">
     <app-course-date-input [formControl]="courseForm.get('date')" [hasError]="hasErrors('date')"></app-course-date-input>
@@ -25,8 +25,8 @@
   
   <div [ngClass]="{ 'error': hasErrors('length') }">
     <label>Duration</label>
-    <span class="ml-16" *ngIf="requiredFailed('length')">This field is required</span>
-    <span class="ml-16" *ngIf="positiveIntFailed('length')">This field must contain a positive integer</span>
+    <span class="ml-16" *ngIf="hasError('length', 'required')">This field is required</span>
+    <span class="ml-16" *ngIf="hasError('length', 'positiveInt')">This field must contain a positive integer</span>
   </div>
   <div class="course-data__duration-group mb-16">
     <app-course-duration-input [formControl]="courseForm.get('length')" [hasError]="hasErrors('length')"></app-course-duration-input>
@@ -35,7 +35,7 @@
   
   <div [ngClass]="{ 'error': hasErrors('authors') }">
     <label>Authors</label>
-    <span class="ml-16" *ngIf="emptyAuthorsFailed('authors')">This field is required</span>
+    <span class="ml-16" *ngIf="hasError('authors', 'emptyAuthors')">This field is required</span>
   </div>
   <div class="mb-16">
     <app-course-authors-input [formControl]="courseForm.get('authors')" [hasError]="hasErrors('authors')"></app-course-authors-input>
