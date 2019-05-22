@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { debounceTime, takeUntil, map, distinctUntilChanged, filter } from 'rxjs/operators';
+
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-courses-controls',
@@ -13,8 +15,9 @@ export class CoursesControlsComponent implements OnInit, OnDestroy {
 
   public keyUp$ = new Subject<KeyboardEvent>();
   public unsubscribe$ = new Subject();
+  public isAdmin$: Observable<boolean>;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.keyUp$.pipe(
@@ -29,6 +32,8 @@ export class CoursesControlsComponent implements OnInit, OnDestroy {
     ).subscribe(
       res => this.searchCourses.emit(res)
     );
+
+    this.isAdmin$ = this.authService.isAdmin();
   }
 
   ngOnDestroy() {

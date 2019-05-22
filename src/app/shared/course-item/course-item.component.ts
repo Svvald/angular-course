@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { faPen, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
 
 import { Course } from '../../entities/course.model';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-course-item',
@@ -18,10 +20,12 @@ export class CourseItemComponent implements OnInit {
   public faPen = faPen;
   public faTrash = faTrash;
   public faStar = faStar;
+  public isAdmin$: Observable<boolean>;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.isAdmin$ = this.authService.isAdmin();
   }
 
   onDelete(id: number) {

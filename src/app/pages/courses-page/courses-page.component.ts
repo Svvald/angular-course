@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,6 +9,7 @@ import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
 import { GetCourses, EditCourse, DeleteCourse, SearchCourses } from '../../store/actions/courses.actions';
 import { CoursesState } from '../../store/reducers/courses.reducer';
+import { getUserRole } from '../../store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-courses-page',
@@ -18,6 +19,7 @@ import { CoursesState } from '../../store/reducers/courses.reducer';
 export class CoursesPageComponent implements OnInit {
   public courses: Course[] = [];
   public showModal: boolean;
+  public userRole: string;
 
   private deletingCourseID: number;
 
@@ -37,8 +39,15 @@ export class CoursesPageComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new GetCourses(this.count));
+
     this.courses$ = this.store.select('courses').pipe(
       map(courses => courses.coursesList)
+    );
+
+    this.store.pipe(
+      select(getUserRole),
+    ).subscribe(
+      res => this.userRole = res
     );
   }
 

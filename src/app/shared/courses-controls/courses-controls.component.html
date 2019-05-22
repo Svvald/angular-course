@@ -2,7 +2,9 @@
   <div class="controls__search">
     <input type="text" (keyup)="keyUp$.next($event)" placeholder="Enter search string">
   </div>
-  <div class="controls__add-course">
-    <button class="btn btn-primary" (click)="onAdd()">Add course</button>
-  </div>
+  <ng-container *ngIf="isAdmin$ | async as isAdmin">
+    <div class="controls__add-course" *ngIf="isAdmin">
+      <button class="btn btn-primary" (click)="onAdd()">Add course</button>
+    </div>
+  </ng-container>
 </div>

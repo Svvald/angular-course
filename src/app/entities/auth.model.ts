@@ -14,4 +14,5 @@ export interface IUser {
         first: string;
         last: string;
     };
+    role: string;
 }

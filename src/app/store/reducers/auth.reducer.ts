@@ -9,7 +9,8 @@ const initialState: AuthState = {
     name: {
         first: '',
         last: ''
-    }
+    },
+    role: ''
 };
 
 // TODO: Figure out how to deal with Action and payload

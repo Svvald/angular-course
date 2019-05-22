@@ -23,9 +23,7 @@
   margin: 0 8px 0 0;
 }
 
-.course-item__buttons {
-  margin-right: auto;
-}
+.course-item__buttons { }
 
 .course-item__button {
   margin-right: 4px;
@@ -36,7 +34,7 @@
 }
 
 .course-item__duration {
-  margin-right: 16px;
+  margin: 0 16px 0 auto;
   font-weight: bold;
 }
 
