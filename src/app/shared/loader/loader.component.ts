@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,9 +18,9 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loaderService.getLoadingStatus().pipe(
-      takeUntil(this.unsubscribe$)
+      takeUntil(this.unsubscribe$),
     ).subscribe(
-      res => this.loading = res
+      res => this.loading = res,
     );
   }
 

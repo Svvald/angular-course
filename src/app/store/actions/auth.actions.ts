@@ -9,7 +9,7 @@ export const AuthActionType = {
     LOGIN_FAIL: '[Auth] Login failed',
     LOGOUT: '[Auth] Logging out',
     LOGOUT_SUCCESS: '[Auth] Logging out succeed',
-    LOGOUT_FAIL: '[Auth] Logging out failed'
+    LOGOUT_FAIL: '[Auth] Logging out failed',
 };
 
 export class Login implements Action {

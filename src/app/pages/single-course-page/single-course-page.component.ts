@@ -1,19 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { Course } from '../../entities/course.model';
-import { ApplicationState } from '../../store/states';
-import { UpdateCourse, AddCourse } from '../../store/actions/courses.actions';
 import { IAuthor } from 'src/app/entities/author.model';
+import { Course } from '../../entities/course.model';
+import { AddCourse, UpdateCourse } from '../../store/actions/courses.actions';
+import { IAppState } from '../../store/states';
 
 @Component({
   selector: 'app-single-course-page',
   templateUrl: './single-course-page.component.html',
-  styleUrls: ['./single-course-page.component.css']
+  styleUrls: ['./single-course-page.component.css'],
 })
 export class SingleCoursePageComponent implements OnInit, OnDestroy {
   public course: Course;
@@ -24,7 +24,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store: Store<ApplicationState>
+    private store: Store<IAppState>,
   ) { }
 
   ngOnInit() {
@@ -38,7 +38,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
 
     if (this.isEditing()) {
       this.store.select('courses').pipe(
-        takeUntil(this.unsubscribe$)
+        takeUntil(this.unsubscribe$),
       ).subscribe(courses => {
         this.course = courses.selectedCourse;
         this.courseForm.setValue({
@@ -57,7 +57,7 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
         isTopRated: false,
         length: 0,
         name: '',
-        authors: []
+        authors: [],
       };
     }
   }
@@ -109,7 +109,9 @@ export class SingleCoursePageComponent implements OnInit, OnDestroy {
   dateToString(date: Date): string {
     date = new Date(date);
 
-    let dayStr, monthStr, yearStr;
+    let dayStr = '';
+    let monthStr = '';
+    let yearStr = '';
 
     const day = date.getDate();
     dayStr = day < 10 ? `0${day}` : `${day}`;

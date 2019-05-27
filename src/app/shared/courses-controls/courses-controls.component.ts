@@ -1,13 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { debounceTime, takeUntil, map, distinctUntilChanged, filter } from 'rxjs/operators';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-courses-controls',
   templateUrl: './courses-controls.component.html',
-  styleUrls: ['./courses-controls.component.css']
+  styleUrls: ['./courses-controls.component.css'],
 })
 export class CoursesControlsComponent implements OnInit, OnDestroy {
   @Output() searchCourses = new EventEmitter<string>();
@@ -28,9 +28,9 @@ export class CoursesControlsComponent implements OnInit, OnDestroy {
       }),
       filter(string => string.length >= 3 || string.length === 0),
       debounceTime(300),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     ).subscribe(
-      res => this.searchCourses.emit(res)
+      res => this.searchCourses.emit(res),
     );
 
     this.isAdmin$ = this.authService.isAdmin();

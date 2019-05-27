@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { CourseHighlightDirective } from './course-highlight/course-highlight.directive';
 
 @NgModule({
     declarations: [
-        CourseHighlightDirective
+        CourseHighlightDirective,
     ],
     imports: [
-        CommonModule
+        CommonModule,
     ],
     exports: [
-        CourseHighlightDirective
+        CourseHighlightDirective,
     ],
     providers: [],
 })

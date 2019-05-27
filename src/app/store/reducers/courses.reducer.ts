@@ -1,12 +1,12 @@
 import { Course } from '../../entities/course.model';
 import { CoursesActionType } from '../actions/courses.actions';
 
-export type CoursesState = {
+export interface ICoursesState {
     coursesList: Course[];
     selectedCourse: Course;
-};
+}
 
-const initialState: CoursesState = {
+const initialState: ICoursesState = {
     coursesList: [],
     selectedCourse: {
         id: 0,
@@ -15,8 +15,8 @@ const initialState: CoursesState = {
         isTopRated: false,
         length: 0,
         name: '',
-        authors: []
-    }
+        authors: [],
+    },
 };
 
 export function coursesReducer(state = initialState, action: any) {
@@ -24,17 +24,13 @@ export function coursesReducer(state = initialState, action: any) {
         case CoursesActionType.GET_COURSES_SUCCESS:
             return {
                 ...state,
-                coursesList: action.payload
+                coursesList: action.payload,
             };
         case CoursesActionType.GET_COURSE_SUCCESS:
-            return {
-                ...state,
-                selectedCourse: action.payload
-            };
         case CoursesActionType.SEARCH_COURSES_SUCCESS:
             return {
                 ...state,
-                coursesList: action.payload
+                selectedCourse: action.payload,
             };
         default:
             return state;

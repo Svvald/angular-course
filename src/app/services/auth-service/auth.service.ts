@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Store, select } from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IAuth, IUser, IToken } from '../../entities/auth.model';
-import { ApplicationState } from '../../store/states';
+import { IAuth, IToken, IUser } from '../../entities/auth.model';
 import { getUserRole } from '../../store/selectors/auth.selectors';
+import { IAppState } from '../../store/states';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly BASE_URL = 'http://localhost:3004/auth';
 
-  constructor(private http: HttpClient, private store: Store<ApplicationState>) { }
+  constructor(private http: HttpClient, private store: Store<IAppState>) { }
 
   public isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
@@ -23,7 +23,7 @@ export class AuthService {
   public isAdmin(): Observable<boolean> {
     return this.store.pipe(
       select(getUserRole),
-      map(role => role.includes('admin'))
+      map(role => role.includes('admin')),
     );
   }
 
@@ -33,7 +33,7 @@ export class AuthService {
 
   public getUserInfo(): Observable<IUser> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ 'Authorization': token });
+    const headers = new HttpHeaders({ Authorization: token });
 
     return this.http.post<IUser>(`${this.BASE_URL}/userinfo`, {}, { headers });
   }

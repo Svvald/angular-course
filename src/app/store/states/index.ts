@@ -1,7 +1,7 @@
 import { AuthState } from '../reducers/auth.reducer';
-import { CoursesState } from '../reducers/courses.reducer';
+import { ICoursesState } from '../reducers/courses.reducer';
 
-export interface ApplicationState {
+export interface IAppState {
     auth: AuthState;
-    courses: CoursesState;
+    courses: ICoursesState;
 }

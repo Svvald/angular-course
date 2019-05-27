@@ -1,10 +1,10 @@
-export interface UserInterface {
+export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
 }
 
-export class User implements UserInterface {
+export class User implements IUser {
   id: number;
   firstName: string;
   lastName: string;

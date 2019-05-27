@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { switchMap, map, tap, catchError } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { AuthActionType, LoginSuccess, LoginFail, LogoutSuccess, LogoutFail, GetUserData, Login } from '../actions/auth.actions';
 import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthActionType, GetUserData, Login, LoginFail, LoginSuccess, LogoutFail, LogoutSuccess } from '../actions/auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -17,7 +17,7 @@ export class AuthEffects {
             tap(token => localStorage.setItem('token', token)),
         )),
         map(_ => new GetUserData()),
-        catchError(err => of(new LoginFail(err)))
+        catchError(err => of(new LoginFail(err))),
     );
 
     @Effect() getUserData$: Observable<Action> = this.actions$.pipe(
@@ -29,36 +29,36 @@ export class AuthEffects {
 
     @Effect({ dispatch: false }) loginSuccess$: Observable<Action> = this.actions$.pipe(
         ofType(AuthActionType.LOGIN_SUCCESS),
-        tap(_ => this.router.navigateByUrl('courses'))
+        tap(_ => this.router.navigateByUrl('courses')),
     );
 
     @Effect({ dispatch: false }) loginFailed$: Observable<Error> = this.actions$.pipe(
         ofType<LoginFail>(AuthActionType.LOGIN_FAIL),
         map(action => action.payload),
-        tap(err => console.error(err))
+        tap(err => console.error(err)),
     );
 
     @Effect() logout$: Observable<Action> = this.actions$.pipe(
         ofType(AuthActionType.LOGOUT),
         tap(_ => localStorage.clear()),
         map(_ => new LogoutSuccess()),
-        catchError(err => of(new LogoutFail(err)))
+        catchError(err => of(new LogoutFail(err))),
     );
 
     @Effect({ dispatch: false }) logoutSuccess$: Observable<Action> = this.actions$.pipe(
         ofType(AuthActionType.LOGOUT_SUCCESS),
-        tap(_ => this.router.navigateByUrl('login'))
+        tap(_ => this.router.navigateByUrl('login')),
     );
 
     @Effect({ dispatch: false }) logoutFailed$: Observable<Error> = this.actions$.pipe(
         ofType<LogoutFail>(AuthActionType.LOGOUT_FAIL),
         map(action => action.payload),
-        tap(err => console.error(err))
+        tap(err => console.error(err)),
     );
 
     constructor(
         private actions$: Actions,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
     ) { }
 }

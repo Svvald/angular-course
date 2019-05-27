@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { faPen, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faPen, faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 
 import { Course } from '../../entities/course.model';
@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth-service/auth.service';
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseItemComponent implements OnInit {
 

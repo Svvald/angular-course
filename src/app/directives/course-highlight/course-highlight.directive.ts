@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[appCourseHighlight]'
+  selector: '[appCourseHighlight]',
 })
 export class CourseHighlightDirective implements OnInit {
   @Input('appCourseHighlight') creationDate: Date;

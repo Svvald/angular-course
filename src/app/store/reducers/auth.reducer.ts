@@ -8,9 +8,9 @@ const initialState: AuthState = {
     fakeToken: '',
     name: {
         first: '',
-        last: ''
+        last: '',
     },
-    role: ''
+    role: '',
 };
 
 // TODO: Figure out how to deal with Action and payload

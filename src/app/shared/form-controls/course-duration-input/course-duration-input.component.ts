@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, FormControl, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-course-duration-input',
@@ -17,18 +17,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, FormControl, NG_VAL
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CourseDurationInputComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => CourseDurationInputComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class CourseDurationInputComponent implements ControlValueAccessor, Validator {
   @Input() hasError: boolean;
-  data: number = 0;
+  public data = 0;
 
   private readonly VALIDATION_REGEX = /^[1-9]\d*$/;
 
@@ -48,7 +48,7 @@ export class CourseDurationInputComponent implements ControlValueAccessor, Valid
 
   validate(c: FormControl): ValidationErrors {
     return this.VALIDATION_REGEX.test(c.value) ? null : {
-      positiveInt: true
+      positiveInt: true,
     };
   }
 

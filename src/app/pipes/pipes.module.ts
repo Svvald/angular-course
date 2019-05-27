@@ -1,25 +1,25 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { OrderByPipe } from './orderby-pipe/orderby.pipe';
 import { DurationPipe } from './duration-pipe/duration.pipe';
 import { FilterPipe } from './filter-pipe/filter.pipe';
+import { OrderByPipe } from './orderby-pipe/orderby.pipe';
 
 @NgModule({
     declarations: [
         OrderByPipe,
         DurationPipe,
-        FilterPipe
+        FilterPipe,
     ],
     imports: [ CommonModule ],
     exports: [
         OrderByPipe,
         DurationPipe,
-        FilterPipe
+        FilterPipe,
     ],
     providers: [
         OrderByPipe,
-        FilterPipe
+        FilterPipe,
     ],
 })
 export class PipesModule {}

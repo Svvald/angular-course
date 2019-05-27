@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth-service/auth.service';
+import { GetUserData, Logout } from '../../store/actions/auth.actions';
 import { AuthState } from '../../store/reducers/auth.reducer';
-import { Logout, GetUserData } from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
@@ -25,9 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     this.store.select('userdata').pipe(
-      takeUntil(this.unsubscribe$)
+      takeUntil(this.unsubscribe$),
     ).subscribe(userdata =>
-      this.username = `${userdata.name.first} ${userdata.name.last}`
+      this.username = `${userdata.name.first} ${userdata.name.last}`,
     );
   }
 

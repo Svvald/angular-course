@@ -1,14 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { PagesModule } from './pages/pages.module';
 import { PipesModule } from './pipes/pipes.module';
-import { SharedModule } from './shared/shared.module';
 import { ServicesModule } from './services/services.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 
@@ -35,10 +35,10 @@ import { CoursesEffects } from './store/effects/courses.effects';
     EffectsModule.forRoot([AuthEffects, CoursesEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: false
-    })
+      logOnly: false,
+    }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

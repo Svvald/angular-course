@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 
 import { AuthService } from './auth-service/auth.service';
 import { CoursesService } from './courses-service/courses.service';
@@ -21,7 +21,7 @@ import { TokenInterceptor } from './token-interceptor/token-interceptor';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
+            multi: true,
         },
     ],
 })

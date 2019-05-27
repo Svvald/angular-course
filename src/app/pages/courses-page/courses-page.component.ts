@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Course } from '../../entities/course.model';
-import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
-import { GetCourses, EditCourse, DeleteCourse, SearchCourses, ViewCourse } from '../../store/actions/courses.actions';
-import { CoursesState } from '../../store/reducers/courses.reducer';
+import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
+import { DeleteCourse, EditCourse, GetCourses, SearchCourses, ViewCourse } from '../../store/actions/courses.actions';
+import { ICoursesState } from '../../store/reducers/courses.reducer';
 import { getUserRole } from '../../store/selectors/auth.selectors';
 
 @Component({
@@ -34,20 +34,20 @@ export class CoursesPageComponent implements OnInit {
   constructor(
     private orderByPipe: OrderByPipe,
     private router: Router,
-    private store: Store<CoursesState>
+    private store: Store<ICoursesState>,
   ) { }
 
   ngOnInit() {
     this.store.dispatch(new GetCourses(this.count));
 
     this.courses$ = this.store.select('courses').pipe(
-      map(courses => courses.coursesList)
+      map(courses => courses.coursesList),
     );
 
     this.store.pipe(
       select(getUserRole),
     ).subscribe(
-      res => this.userRole = res
+      res => this.userRole = res,
     );
   }
 

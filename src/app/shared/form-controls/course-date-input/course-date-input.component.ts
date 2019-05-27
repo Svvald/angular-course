@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, Validator, FormControl, NG_VALUE_ACCESSOR, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-course-date-input',
@@ -17,18 +17,18 @@ import { ControlValueAccessor, Validator, FormControl, NG_VALUE_ACCESSOR, NG_VAL
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CourseDateInputComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => CourseDateInputComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class CourseDateInputComponent implements ControlValueAccessor, Validator {
   @Input() hasError: boolean;
-  data: string = '';
+  public data = '';
 
   private readonly VALIDATION_REGEX = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;
 
@@ -48,9 +48,9 @@ export class CourseDateInputComponent implements ControlValueAccessor, Validator
 
   validate(c: FormControl): ValidationErrors {
     return this.VALIDATION_REGEX.test(c.value) ? null : {
-      dateFormat: true
+      dateFormat: true,
     };
-    //TODO: Make advanced validation e.g. 30 days in February etc.
+    // TODO: Make advanced validation e.g. 30 days in February etc.
   }
 
   updateValue(value: string) {

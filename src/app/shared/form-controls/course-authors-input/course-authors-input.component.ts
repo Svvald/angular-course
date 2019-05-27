@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl, ValidationErrors } from '@angular/forms';
+import { Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { IAuthor } from 'src/app/entities/author.model';
 import { AuthorsService } from 'src/app/services/authors-service/authors.service';
@@ -14,14 +14,14 @@ import { AuthorsService } from 'src/app/services/authors-service/authors.service
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CourseAuthorsInputComponent),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => CourseAuthorsInputComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class CourseAuthorsInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   @ViewChild('tagInput') tagInputRef: ElementRef;
@@ -46,7 +46,7 @@ export class CourseAuthorsInputComponent implements OnInit, OnDestroy, ControlVa
       }),
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(string => this.authorsService.searchAuthors(string))
+      switchMap(string => this.authorsService.searchAuthors(string)),
     ).subscribe(res => {
       this.authors = res;
     });
@@ -68,7 +68,7 @@ export class CourseAuthorsInputComponent implements OnInit, OnDestroy, ControlVa
 
   validate(c: FormControl): ValidationErrors {
     return this.data.length ? null : {
-      emptyAuthors: true
+      emptyAuthors: true,
     };
   }
 
