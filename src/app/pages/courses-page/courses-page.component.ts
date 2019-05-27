@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { Course } from '../../entities/course.model';
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
 import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
-import { GetCourses, EditCourse, DeleteCourse, SearchCourses } from '../../store/actions/courses.actions';
+import { GetCourses, EditCourse, DeleteCourse, SearchCourses, ViewCourse } from '../../store/actions/courses.actions';
 import { CoursesState } from '../../store/reducers/courses.reducer';
 import { getUserRole } from '../../store/selectors/auth.selectors';
 
@@ -84,5 +84,9 @@ export class CoursesPageComponent implements OnInit {
 
   onEditCourse(id: number) {
     this.store.dispatch(new EditCourse(id));
+  }
+
+  onViewCourse(id: number) {
+    this.store.dispatch(new ViewCourse(id));
   }
 }

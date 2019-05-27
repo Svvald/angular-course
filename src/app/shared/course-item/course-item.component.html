@@ -1,4 +1,4 @@
-<div class="course-item" [appCourseHighlight]="data.date" [ngClass]="{'course-item__top-rated': data.isTopRated}">
+<div class="course-item" [appCourseHighlight]="data.date" [ngClass]="{'course-item__top-rated': data.isTopRated}" (click)="onView(data.id)">
   <div class="course-item__heading">
     <h3 class="course-item__title">{{ data.name | uppercase }}</h3>
     <ng-container *ngIf="isAdmin$ | async as isAdmin">

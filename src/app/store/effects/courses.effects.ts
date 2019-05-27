@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 
 import { CoursesService } from '../../services/courses-service/courses.service';
-import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail, AddCourse, AddCourseSuccess, AddCourseFail, SearchCourses, SearchCoursesSuccess, SearchCoursesFail } from '../actions/courses.actions';
+import { GetCourses, CoursesActionType, GetCoursesSuccess, GetCoursesFail, GetCourse, GetCourseSuccess, GetCourseFail, EditCourse, UpdateCourse, UpdateCourseSuccess, UpdateCourseFail, DeleteCourse, DeleteCourseSuccess, DeleteCourseFail, AddCourse, AddCourseSuccess, AddCourseFail, SearchCourses, SearchCoursesSuccess, SearchCoursesFail, ViewCourse } from '../actions/courses.actions';
 import { LoaderService } from '../../services/loader-service/loader.service';
 
 @Injectable()
@@ -54,7 +54,7 @@ export class CoursesEffects {
     @Effect() editCourse$: Observable<Action> = this.actions$.pipe(
         ofType<EditCourse>(CoursesActionType.EDIT_COURSE),
         map(action => action.payload),
-        tap(id => this.router.navigateByUrl(`courses/${id}`)),
+        tap(id => this.router.navigateByUrl(`courses/edit/${id}`)),
         map(id => new GetCourse(id))
     );
 
@@ -139,6 +139,13 @@ export class CoursesEffects {
     @Effect({ dispatch: false }) searchCoursesSuccess$: Observable<Action> = this.actions$.pipe(
         ofType(CoursesActionType.SEARCH_COURSES_SUCCESS),
         tap(_ => this.loaderService.toggle(false))
+    );
+
+    @Effect() viewCourse: Observable<Action> = this.actions$.pipe(
+        ofType<ViewCourse>(CoursesActionType.VIEW_COURSE),
+        map(action => action.payload),
+        tap(id => this.router.navigateByUrl(`courses/${id}`)),
+        map(id => new GetCourse(id))
     );
 
     constructor(

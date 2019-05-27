@@ -6,6 +6,7 @@ import { CoursesPageComponent } from './courses-page/courses-page.component';
 import { SingleCoursePageComponent } from './single-course-page/single-course-page.component';
 import { NoContentPageComponent } from './no-content-page/no-content-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { CourseViewPageComponent } from './course-view-page/course-view-page.component';
 
 import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
@@ -16,6 +17,7 @@ import { PipesModule } from '../pipes/pipes.module';
         SingleCoursePageComponent,
         NoContentPageComponent,
         LoginPageComponent,
+        CourseViewPageComponent,
     ],
     imports: [
         CommonModule,
@@ -29,6 +31,7 @@ import { PipesModule } from '../pipes/pipes.module';
         SingleCoursePageComponent,
         NoContentPageComponent,
         LoginPageComponent,
+        CourseViewPageComponent,
     ],
     providers: [],
 })

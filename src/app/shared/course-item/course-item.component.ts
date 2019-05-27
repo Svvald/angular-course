@@ -16,6 +16,7 @@ export class CourseItemComponent implements OnInit {
   @Input() data: Course;
   @Output() deleteCourse = new EventEmitter<number>();
   @Output() editCourse = new EventEmitter<number>();
+  @Output() viewCourse = new EventEmitter<number>();
 
   public faPen = faPen;
   public faTrash = faTrash;
@@ -34,5 +35,9 @@ export class CourseItemComponent implements OnInit {
 
   onEdit(id: number) {
     this.editCourse.emit(id);
+  }
+
+  onView(id: number) {
+    this.viewCourse.emit(id);
   }
 }

@@ -4,14 +4,17 @@ import { CoursesPageComponent } from './pages/courses-page/courses-page.componen
 import { SingleCoursePageComponent } from './pages/single-course-page/single-course-page.component';
 import { NoContentPageComponent } from './pages/no-content-page/no-content-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { CourseViewPageComponent } from './pages/course-view-page/course-view-page.component';
 
 import { AuthGuard } from './guards/auth/auth.guard';
+import { AdminGuard } from './guards/admin/admin.guard';
 
 export const ROUTES: Route[] = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
   { path: 'courses', component: CoursesPageComponent, canActivate: [AuthGuard] },
-  { path: 'courses/:id', component: SingleCoursePageComponent, canActivate: [AuthGuard] },
-  { path: 'courses/new', component: SingleCoursePageComponent, canActivate: [AuthGuard] },
+  { path: 'courses/:id', component: CourseViewPageComponent, canActivate: [AuthGuard] },
+  { path: 'courses/edit/:id', component: SingleCoursePageComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'courses/new', component: SingleCoursePageComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'login', component: LoginPageComponent },
   { path: '**', component: NoContentPageComponent }
 ];
