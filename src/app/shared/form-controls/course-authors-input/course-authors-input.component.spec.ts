@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseAuthorsInputComponent } from './course-authors-input.component';
 
-describe('CourseAuthorsInputComponent', () => {
+xdescribe('CourseAuthorsInputComponent', () => {
   let component: CourseAuthorsInputComponent;
   let fixture: ComponentFixture<CourseAuthorsInputComponent>;
 

@@ -1,3 +1,5 @@
+/* tslint:disable:max-classes-per-file */
+
 import { Action } from '@ngrx/store';
 
 import { IAuth, IUser } from 'src/app/entities/auth.model';

@@ -1,3 +1,5 @@
+/* tslint:disable:max-classes-per-file */
+
 import { Action } from '@ngrx/store';
 
 import { Course } from '../../entities/course.model';

@@ -1,6 +1,6 @@
 import { DurationPipe } from './duration.pipe';
 
-describe('DurationPipe', () => {
+xdescribe('DurationPipe', () => {
   const pipe = new DurationPipe();
 
   it('create an instance', () => {
