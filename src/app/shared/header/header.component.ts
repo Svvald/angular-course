@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth-service/auth.service';
 import { GetUserData, Logout } from '../../store/actions/auth.actions';
-import { AuthState } from '../../store/reducers/auth.reducer';
+import { IAuthState } from '../../store/reducers/auth.reducer';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +14,7 @@ import { AuthState } from '../../store/reducers/auth.reducer';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  constructor(public authService: AuthService, private store: Store<AuthState>) { }
+  constructor(public authService: AuthService, private store: Store<IAuthState>) { }
 
   public username: string;
   private unsubscribe$ = new Subject();
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.store.dispatch(new GetUserData());
     }
 
-    this.store.select('userdata').pipe(
+    this.store.select('auth').pipe(
       takeUntil(this.unsubscribe$),
     ).subscribe(userdata =>
       this.username = `${userdata.name.first} ${userdata.name.last}`,

@@ -1,9 +1,9 @@
 import { IUser } from 'src/app/entities/auth.model';
 import { AuthActionType } from '../actions/auth.actions';
 
-export type AuthState = IUser;
+export type IAuthState = IUser;
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
     id: 0,
     fakeToken: '',
     name: {
@@ -14,7 +14,7 @@ const initialState: AuthState = {
 };
 
 // TODO: Figure out how to deal with Action and payload
-export function authReducer(state = initialState, action: any): AuthState {
+export function authReducer(state = initialState, action: any): IAuthState {
     switch (action.type) {
         case AuthActionType.LOGIN_SUCCESS:
             return action.payload;

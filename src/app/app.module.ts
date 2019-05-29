@@ -31,7 +31,7 @@ import { CoursesEffects } from './store/effects/courses.effects';
     SharedModule,
     ServicesModule,
     RouterModule.forRoot(ROUTES),
-    StoreModule.forRoot({ userdata: authReducer, courses: coursesReducer }),
+    StoreModule.forRoot({ auth: authReducer, courses: coursesReducer }),
     EffectsModule.forRoot([AuthEffects, CoursesEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
