@@ -30,7 +30,7 @@
   </div>
   <div class="course-data__duration-group mb-16">
     <app-course-duration-input [formControl]="courseForm.get('length')" [hasError]="hasErrors('length')"></app-course-duration-input>
-    <span class="ml-16"><b>{{ courseForm.get('length').value | duration }}</b></span>
+    <span class="ml-16 course-data__duration-string">{{ courseForm.get('length').value | duration }}</span>
   </div>
   
   <div [ngClass]="{ 'error': hasErrors('authors') }">

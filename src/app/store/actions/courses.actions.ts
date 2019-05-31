@@ -25,6 +25,7 @@ export const CoursesActionType = {
     SEARCH_COURSES_SUCCESS: '[Courses] Search courses succeed',
     SEARCH_COURSES_FAIL: '[Courses] Search courses failed',
     VIEW_COURSE: '[Courses] Viewing course',
+    LOAD_MORE: '[Courses] Load more',
 };
 
 export class GetCourses implements Action {
@@ -124,4 +125,8 @@ export class ViewCourse implements Action {
     constructor(public payload: number) { }
 }
 
-export type CourseActionFail = GetCoursesFail | GetCourseFail | UpdateCourseFail | DeleteCourseFail | AddCourseFail;
+export class LoadMore implements Action {
+    readonly type = CoursesActionType.LOAD_MORE;
+}
+
+export type CourseActionFail = GetCoursesFail | GetCourseFail | UpdateCourseFail | DeleteCourseFail | AddCourseFail | SearchCoursesFail;

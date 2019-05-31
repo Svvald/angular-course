@@ -1,6 +1,6 @@
 <app-breadcrumbs></app-breadcrumbs>
 <app-courses-controls (searchCourses)="onCourseSearch($event)" (addCourse)="onAddCourse()"></app-courses-controls>
-<ng-container *ngIf="courses$ | async as courses; else noData">
+<ng-container *ngIf="courses.length; else noData">
   <app-course-item *ngFor="let course of courses"
                    [data]="course"
                    (deleteCourse)="onDeleteCourse($event)"

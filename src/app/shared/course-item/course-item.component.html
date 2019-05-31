@@ -1,12 +1,12 @@
-<div class="course-item" [appCourseHighlight]="data.date" [ngClass]="{'course-item__top-rated': data.isTopRated}" (click)="onView(data.id)">
+<div class="course-item" [appCourseHighlight]="data.date" [ngClass]="{'course-item__top-rated': data.isTopRated}" (click)="onView($event)">
   <div class="course-item__heading">
     <h3 class="course-item__title">{{ data.name | uppercase }}</h3>
     <ng-container *ngIf="isAdmin$ | async as isAdmin">
       <div class="course-item__buttons" *ngIf="isAdmin">
-        <button class="course-item__button btn btn-primary btn-round" (click)="onEdit(data.id)">
+        <button class="course-item__button btn btn-primary btn-round" (click)="onEdit($event)">
           <fa-icon [icon]="faPen" size="sm"></fa-icon>
         </button>
-        <button class="course-item__button btn btn-primary btn-round" (click)="onDelete(data.id)">
+        <button class="course-item__button btn btn-primary btn-round" (click)="onDelete($event)">
           <fa-icon [icon]="faTrash" size="sm"></fa-icon>
         </button>
         <fa-icon *ngIf="data.isTopRated" [icon]="faStar" class="course-item__top-rated-icon"></fa-icon>

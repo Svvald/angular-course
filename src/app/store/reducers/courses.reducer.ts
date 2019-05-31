@@ -4,6 +4,7 @@ import { CoursesActionType } from '../actions/courses.actions';
 export interface ICoursesState {
     coursesList: Course[];
     selectedCourse: Course;
+    coursesCount: number;
 }
 
 const initialState: ICoursesState = {
@@ -17,9 +18,11 @@ const initialState: ICoursesState = {
         name: '',
         authors: [],
     },
+    coursesCount: 5,
 };
 
 export function coursesReducer(state = initialState, action: any) {
+    const COUNT_INC = 5;
     switch (action.type) {
         case CoursesActionType.GET_COURSES_SUCCESS:
             return {
@@ -31,6 +34,11 @@ export function coursesReducer(state = initialState, action: any) {
             return {
                 ...state,
                 selectedCourse: action.payload,
+            };
+        case CoursesActionType.LOAD_MORE:
+            return {
+                ...state,
+                coursesCount: state.coursesCount += COUNT_INC,
             };
         default:
             return state;

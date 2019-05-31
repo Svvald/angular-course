@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { Course } from '../../entities/course.model';
-import { FilterPipe } from '../../pipes/filter-pipe/filter.pipe';
 import { OrderByPipe } from '../../pipes/orderby-pipe/orderby.pipe';
-import { DeleteCourse, EditCourse, GetCourses, SearchCourses, ViewCourse } from '../../store/actions/courses.actions';
+import { DeleteCourse, EditCourse, LoadMore, SearchCourses, ViewCourse, GetCourses } from '../../store/actions/courses.actions';
 import { ICoursesState } from '../../store/reducers/courses.reducer';
-import { getUserRole } from '../../store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-courses-page',
@@ -19,17 +15,9 @@ import { getUserRole } from '../../store/selectors/auth.selectors';
 export class CoursesPageComponent implements OnInit {
   public courses: Course[] = [];
   public showModal: boolean;
-  public userRole: string;
 
   private deletingCourseID: number;
-
-  // TODO: Maybe move it to store and use in effects
-  private count = 5;
-
   private readonly ORDER_BY_DATE = 'date';
-  private readonly COUNT_INC = 5;
-
-  public courses$: Observable<Course[]>;
 
   constructor(
     private orderByPipe: OrderByPipe,
@@ -38,22 +26,17 @@ export class CoursesPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new GetCourses(this.count));
+    this.store.select('courses').subscribe(res => {
+        this.courses = res.coursesList;
+    });
 
-    this.courses$ = this.store.select('courses').pipe(
-      map(courses => courses.coursesList),
-    );
-
-    this.store.pipe(
-      select(getUserRole),
-    ).subscribe(
-      res => this.userRole = res,
-    );
+    if (!this.courses.length) {
+      this.store.dispatch(new GetCourses(5));
+    }
   }
 
   onLoadMore() {
-    this.count += this.COUNT_INC;
-    this.store.dispatch(new GetCourses(this.count));
+    this.store.dispatch(new LoadMore());
     // TODO: Change behavior of orderByPipe
     // this.courses = this.orderByPipe.transform(res, this.ORDER_BY_DATE);
   }
@@ -67,7 +50,6 @@ export class CoursesPageComponent implements OnInit {
   onDeleteConfirm() {
     this.showModal = false;
     this.store.dispatch(new DeleteCourse(this.deletingCourseID));
-    this.store.dispatch(new GetCourses(this.count));
   }
 
   onDeleteCancel() {

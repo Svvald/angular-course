@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+.course-data__duration-string {
+    font-weight: bold;
+    color: #221b9c;
+}
+
 .course-data__buttons {
     display: flex;
     justify-content: flex-end;

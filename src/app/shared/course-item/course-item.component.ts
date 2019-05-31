@@ -29,15 +29,17 @@ export class CourseItemComponent implements OnInit {
     this.isAdmin$ = this.authService.isAdmin();
   }
 
-  onDelete(id: number) {
-    this.deleteCourse.emit(id);
+  onDelete(event: Event) {
+    event.stopPropagation();
+    this.deleteCourse.emit(this.data.id);
   }
 
-  onEdit(id: number) {
-    this.editCourse.emit(id);
+  onEdit(event: Event) {
+    event.stopPropagation();
+    this.editCourse.emit(this.data.id);
   }
 
-  onView(id: number) {
-    this.viewCourse.emit(id);
+  onView(event: Event) {
+    this.viewCourse.emit(this.data.id);
   }
 }
