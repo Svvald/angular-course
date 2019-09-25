@@ -1,0 +1,17 @@
+{
+  "pages": {
+    "courses": {
+      "loadMore": "Load more",
+      "noData": "No data"
+    }
+  },
+  "modals": {
+    "deleteCourse": {
+      "title": "Do you really want to delete this course?"
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { GetUserData, Logout } from '../../store/actions/auth.actions';
 import { IAuthState } from '../../store/reducers/auth.reducer';
@@ -14,9 +15,13 @@ import { IAuthState } from '../../store/reducers/auth.reducer';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  constructor(public authService: AuthService, private store: Store<IAuthState>) { }
+  constructor(public authService: AuthService,
+              private store: Store<IAuthState>,
+              private translate: TranslateService,
+  ) { }
 
   public username: string;
+  public readonly languages = ['en', 'ru'];
   private unsubscribe$ = new Subject();
 
   ngOnInit() {
@@ -31,12 +36,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.unsubscribe$.next();
   }
 
-  onLogOut() {
+  public onLogOut(): void {
     this.store.dispatch(new Logout());
   }
 
+  public onLanguageChange(event): void {
+    this.translate.use(event.target.value);
+  }
 }

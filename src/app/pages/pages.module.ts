@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { CourseViewPageComponent } from './course-view-page/course-view-page.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
@@ -25,6 +26,7 @@ import { SharedModule } from '../shared/shared.module';
         ReactiveFormsModule,
         PipesModule,
         SharedModule,
+        TranslateModule,
     ],
     exports: [
         CoursesPageComponent,

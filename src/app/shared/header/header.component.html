@@ -3,6 +3,9 @@
     <img src="../../assets/img/logo.png">
     <h3>Videoportal</h3>
   </a>
+  <select (change)="onLanguageChange($event)">
+    <option *ngFor="let item of languages">{{ item }}</option>
+  </select>
   <div class="header__user-controls" *ngIf="authService.isAuthenticated">
     <div class="header__username">
       {{ username }}

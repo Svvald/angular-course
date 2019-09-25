@@ -1,8 +1,11 @@
 .courses-page__load-more {
   width: 100%;
   padding: 16px 0;
+  font-size: 16px;
+  color: #221b9c;
   text-align: center;
   background-color: white;
+  border: 0;
   border-radius: 4px;
   cursor: pointer;
 }
